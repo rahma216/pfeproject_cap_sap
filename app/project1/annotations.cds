@@ -1,0 +1,1 @@
+using modelsService as service from '../../srv/modelserv';

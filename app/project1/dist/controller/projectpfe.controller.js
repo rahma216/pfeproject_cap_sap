@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("app.project1.controller.projectpfe",{onInit:function(){}})});

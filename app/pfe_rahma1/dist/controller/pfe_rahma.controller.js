@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("my.pferahma1.controller.pfe_rahma",{onInit:function(){}})});

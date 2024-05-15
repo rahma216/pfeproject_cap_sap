@@ -1,0 +1,217 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="app.project1.controller.List"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        toggleHeaderOnTitleClick="false"
+        headerExpanded="true"
+        fitContent="true"
+    >
+        <!-- DynamicPage Title -->
+      
+        <f:content>
+            <Page
+                id="page"
+                title="{i18n>title}"
+            >
+                <content>
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                    >
+                        <form:content>
+                            <VBox>
+                        
+                                <Label text="Create your Entity" required="true"/>
+
+                                <Input
+                                    id="EntityID"
+                                    width="50%"
+                                    placeholder="EntityID"
+                                    required="true"
+                                />
+
+                                <Input
+                                    id="EntityNamee"
+                                    width="50%"
+                                    placeholder="EntityName"
+                                    required="true"
+                                />
+                                <Button
+                                    id="confirmCreate1"
+                                    text="Create"
+                                    press=".onCreate"
+                                    type="Accept"
+                                    width=""
+                                />
+                            </VBox>
+                        </form:content>
+                    </form:SimpleForm>
+
+                    <Table
+                        items="{path: 'mainModel>/Entity'
+                        ,
+                         parameters: {
+                                            $expand: 'fields' 
+                                        },
+                            sorter: {
+                                path: 'name'
+                            }
+                            }"
+                        id="table0"
+                        mode="SingleSelectLeft"
+                        selectionChange="onSelect"
+                    >
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <content>
+                                    <Title
+                                        text="Entities"
+                                        level="H2"
+                                    />
+
+                                    <ToolbarSpacer />
+                                    <SearchField
+                                        id="searchField"
+                                        width="20%"
+                                        placeholder="search"
+                                        search=".onSearch"
+                                    />
+                                    <Button
+                                        id="createButton"
+                                        icon="sap-icon://edit"
+                                        tooltip="Create"
+                                        visible="true"
+                                        press="onOpenAddDialog"
+                                    >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData
+                                                priority="NeverOverflow"
+                                            />
+                                        </layoutData>
+                                    </Button>
+                                    <Button
+                                        id="deleteButton"
+                                        icon="sap-icon://delete"
+                                        tooltip="Delete"
+                                        visible="true"
+                                        press="onDelete"
+                                    >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData
+                                                priority="NeverOverflow"
+                                            />
+                                        </layoutData>
+                                    </Button>
+
+                                    <Button
+                                        id="saveButton"
+                                        text="Save"
+                                        type="Emphasized"
+                                        visible="false"
+                                        enabled="true"
+                                        press="onSave"
+                                    />
+                                 
+                                </content>
+                                <dependents>
+                                    <Dialog
+                                        id="OpenDialog"
+                                        title="Update Entity"
+                                    >
+                                        <buttons>
+                                            <Button
+                                                id="confirmUpdate"
+                                                text="Update"
+                                                press=".onUpdate"
+                                                type="Emphasized"
+                                            />
+                                            <Button
+                                                id="cancelUpdate"
+                                                text="Cancel"
+                                                press="onCancelDialog"
+                                                type="Transparent"
+                                            />
+                                        </buttons>
+                                        <form:SimpleForm
+                                            editable="true"
+                                            layout="ResponsiveGridLayout"
+                                        >
+                                            <form:content>
+                                                <Label text="Entity Name" />
+                                                <Input id="EntityName" />
+                                            </form:content>
+                                        </form:SimpleForm>
+                                    </Dialog>
+                                    
+                                </dependents>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <infoToolbar>
+                            <OverflowToolbar>
+                                <Label text="Here are your created Entities" />
+                            </OverflowToolbar>
+                        </infoToolbar>
+                        <items>
+                            <ColumnListItem
+                                type="Active"
+                                id="item0"
+                                press=".onListItemPress"
+                            >
+                                <cells>
+                                    <Text
+                                        id="id1"
+                                        text="{mainModel>ID}"
+                                    />
+                                    <Text
+                                        id="id2"
+                                        text="{mainModel>name}"
+                                    />
+        <core:Icon src="sap-icon://message-success" color="green"   />
+                                   
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <columns>
+                            <Column>
+                                <header>
+                                    <Label text="ID" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Label text="name" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Label text="Status" />
+                                </header>
+                            </Column>
+                        </columns>
+                    </Table>
+                </content>
+            </Page>
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Accept"
+                />
+                <Button
+                    type="Reject"
+                    text="Reject"
+                />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
