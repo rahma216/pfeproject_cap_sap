@@ -12,7 +12,7 @@ entity Entity : cuid, managed {
     fields      : Association to many Field on fields.fld = $self;
 }
 entity Field : cuid, managed {
-    key ID       : String;
+    key ID       : UUID;
     value       : String;
     type        : String;
     fld         : Association to Entity; // Many-to-one association

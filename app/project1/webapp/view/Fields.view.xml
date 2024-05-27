@@ -131,12 +131,7 @@
                                             justifyContent="Center"
                                         >
                                             <m:HBox id="fields">
-                                                <m:Input
-                                                    id="fieldid"
-                                                    value=""
-                                                    placeholder="ID"
-                                                    width="100%"
-                                                />
+                                    
                                                 <m:ComboBox
                                                     id="key"
                                                     placeholder="PrimaryKey"
@@ -313,10 +308,7 @@
                                             press=".onSupplierPress"
                                         >
                                             <m:cells>
-                                                <m:Text
-                                                    id="id3"
-                                                    text="{mainModel>ID}"
-                                                />
+                                              
                                                 <m:Text
                                                     id="id4"
                                                     text="{mainModel>value}"
@@ -337,11 +329,7 @@
                                         </m:ColumnListItem>
                                     </m:items>
                                     <m:columns>
-                                        <m:Column>
-                                            <m:header>
-                                                <m:Label text="ID" />
-                                            </m:header>
-                                        </m:Column>
+                                    
                                         <m:Column>
                                             <m:header>
                                                 <m:Label text="value" />
@@ -485,9 +473,6 @@
                                     </m:OverflowToolbar>
                                 </m:headerToolbar>
                                 <m:columns>
-                                    <m:Column>
-                                        <m:Label text="ID" />
-                                    </m:Column>
                                      <m:Column>
                                         <m:Label text="Source ID" />
                                     </m:Column>
@@ -501,9 +486,7 @@
                                 <m:items>
                                     <m:ColumnListItem>
                                         <m:cells>
-                                          <m:ObjectIdentifier
-                                                title="{associationsModel>ID}"
-                                            />
+                            
                                             <m:ObjectIdentifier
                                                 title="{associationsModel>entitySource_ID}"
                                             />

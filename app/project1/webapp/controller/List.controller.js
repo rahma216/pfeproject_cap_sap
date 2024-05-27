@@ -105,80 +105,58 @@ sap.ui.define([
            
 
             onCreate: function () {
-
                 var oView = this.getView(),
-
-                    aInputs = [oView.byId("EntityID"), oView.byId("EntityNamee")];
-                    var oModel1 = this.getOwnerComponent().getModel("detailModel");
-
-
+                    aInputs = [oView.byId("EntityNamee")];
+                var oModel1 = this.getOwnerComponent().getModel("detailModel");
            
-
                 this._validateInputs(aInputs).then((aValidationResults) => {
-
                     var bValidationError = aValidationResults.some(result => result === true);
-
            
-
                     if (!bValidationError) {
-
-                        const oList = this._oTable;
-
-                        const oBinding = oList.getBinding("items");
-
- 
-
-                        oBinding.create({
-
-                            "ID": this.byId("EntityID").getValue(),
-
-                            "name": this.byId("EntityNamee").getValue(),
-
-                        });
-                        aInputs.forEach((oInput) => { 
-                            oInput.setValue("")
-                        });
                         var oModel = this.getOwnerComponent().getModel("mainModel");
-                        var sUrl1 = oModel.sServiceUrl + "/Entity";
-                        fetch(sUrl1)
+                        var sUrl = oModel.sServiceUrl + "/Entity";
+           
+                        // Fetch existing entity count
+                        fetch(sUrl)
                         .then(response => {
-                          if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                          }
-                          return response.json();
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
                         })
                         .then(data => {
-                          // Create a JSON model containing the fetched data
-              
-                          oModel1.setData(data.value);
-              
-                          console.log("patronnnnnnnnnnnnnnnnnnnnnnnnnnns", oModel1.getData());
-              
-                          // Set the JSON model on the controls
-              
+                            const newID = (data.value.length + 1).toString();
+                            const oList = this._oTable;
+                            const oBinding = oList.getBinding("items");
+           
+                            // Create new entity with calculated new ID
+                            oBinding.create({
+                                "ID": newID,
+                                "name": this.byId("EntityNamee").getValue(),
+                            });
+           
+                            // Reset input fields after creation
+                            aInputs.forEach((oInput) => {
+                                oInput.setValue("");
+                            });
+           
+                            // Optionally update your model if needed
+                            oModel1.setData(data.value);
+                            console.log("Updated model with data: ", oModel1.getData());
+           
+                            MessageToast.show("The input is validated. Your Entity has been created with ID: " + newID);
                         })
                         .catch(error => {
-                          // Handle errors in fetching data
-                          console.error('Error fetching data:', error);
+                            console.error('Error fetching data:', error);
+                            MessageBox.alert("Failed to fetch existing entities count.");
                         });
-                        
-
-                        MessageToast.show("The input is validated. Your Entity has been Created.");
-
                     } else {
-
-                        MessageBox.alert("A validation error has occurred.Check your Id and your EntityName");
-
+                        MessageBox.alert("A validation error has occurred. Check your Entity Name");
                     }
-
                 }).catch((oError) => {
-
                     MessageBox.alert("An error occurred during the validation process.");
-
                 });
-
             },
-
 
             onOpenAddDialog: function () {
                 this.getView().byId("OpenDialog").open();

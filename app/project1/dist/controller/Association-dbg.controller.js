@@ -364,7 +364,7 @@ sap.ui.define([
 
 
 
-    generateCDSEntities: function (entityData, fieldsData, associationsData) {
+    generateCDSEntities: async function (entityData, fieldsData, associationsData) {
       const cdsEntities = [];
 
       for (const entity of entityData) {
@@ -479,12 +479,18 @@ sap.ui.define([
         }
         cdsEntities.push(cdsEntity);
       }
+      this.onGitClone();
+      await this.sleep(2000);
       this.onAppendTextToFilePress(` namespace models;
       using { cuid, managed} from '@sap/cds/common';\n`+ cdsEntities.join(''))
 
 
       return cdsEntities.join('');
     },
+    sleep: function (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+  },
+  
     /////////////////////////////////////////////////////////////////////////
     UIgen: function () {
       var entityName = this.test;
@@ -584,18 +590,37 @@ sap.ui.define([
 
     },
 
+    onGitClone: function() {
+      var command = "cd /home/vcap/app && git clone https://github.com/rahma216/pfeProject_Rahma.git";
+      var oMainModel = this.getOwnerComponent().getModel("mainModel");
+      var oAction = oMainModel.bindContext("/ExecuteCommand(...)");
+    
+      oAction.setParameter('command', command);
+      oAction.execute().then(
+        function () {
+          MessageToast.show("Command executed successfully");
+        },
+        function (oError) {
+          MessageToast.show("Error executing command");
+        }
+      );
+    },
+    
     onAppendTextToFilePress: function(data) {
       var oMainModel = this.getOwnerComponent().getModel("mainModel");
       var oAction = oMainModel.bindContext("/appendTextToFile(...)");
+    
       oAction.setParameter('content', data);
       oAction.execute().then(
         function () {
-            MessageToast.show("Invoice created for sales order ");
+          MessageToast.show("Text appended to file successfully");
         },
         function (oError) {
-            MessageToast.show("Error!!! ");
-        });
-  },
+          MessageToast.show("Error appending text to file");
+        }
+      );
+    }
+,    
   
   _fnFetchResult: async function(oResult) {
       var header = oResult.headers.get('content-type');
@@ -610,24 +635,21 @@ sap.ui.define([
       }
   }
 ,  
+
     onAppendServiceToFilePress: function (data) {
 
-
-      fetch("/odata/v4/models/appendServiceToFile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: data }) // Pass the variable in the request body
-      })
-        .then(response => response.json())
-        .then(data1 => {
-          console.log("Action invoked successfully:", data1);
-        })
-        .catch(error => {
-          console.error("Error invoking action:", error);
-        });
-
+        var oMainModel = this.getOwnerComponent().getModel("mainModel");
+        // var oAction = oMainModel.bindContext("/appendTextToFile(...)");
+        var oAction = oMainModel.bindContext("/appendServiceToFile(...)");
+         oAction.setParameter('content', data);
+     
+         oAction.execute().then(
+           function () {
+               MessageToast.show("Invoice created for sales order ");
+           },
+           function (oError) {
+               MessageToast.show("Error!!! ");
+           });
     }
     ,
     onAppendUIToFilePress: function (data) {
@@ -902,7 +924,35 @@ sap.ui.define([
         });
 
     },
-
+/*     onDownloadZip: function() {
+      var sServiceUrl = "/odata/v4/models/downloadZip"; // Adjust based on your actual service URL
+    
+      fetch(sServiceUrl, {
+          method: 'POST', // Specify the method as POST
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (!data.zipPath) {
+              throw new Error('No ZIP path returned');
+          }
+          var zipUrl = data.zipPath;
+          var link = document.createElement('a');
+          link.href = zipUrl;
+          link.download = "PFE_Rahma.zip"; // Set the desired file name here
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      })
+      .catch(err => {
+          console.error('Error downloading the file', err);
+          sap.m.MessageToast.show("Failed to download ZIP file.");
+      });
+    } */
+    
+    
 
 
 

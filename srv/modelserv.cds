@@ -7,6 +7,7 @@ service modelsService {
   entity Association as projection on models.Association;
   entity Field       as projection on models.Field;
 
+action downloadZip() returns String;
 
   action appendTextToFile(content : String)              returns {
     success : Boolean

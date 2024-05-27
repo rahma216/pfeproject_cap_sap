@@ -406,6 +406,13 @@
                     type="Accept"
                     icon="sap-icon://write-new-document"
                 />
+                  <Button
+                    id="aa1"
+                    text="down"
+                    press="onDownloadZip"
+                    type="Accept"
+                    icon="sap-icon://write-new-document"
+                />
               
 
 			

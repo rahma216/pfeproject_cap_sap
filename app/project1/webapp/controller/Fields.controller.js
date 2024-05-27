@@ -225,7 +225,6 @@ sap.ui.define(
 
 
                                     const oContext = oBinding2.create({
-                                        "ID": this.byId("fieldid").getValue(),
                                         "value": this.byId("field").getValue(),
                                         "type": this.byId("idComboBoxSuccess").getValue(),
                                         "fld": oEntity,

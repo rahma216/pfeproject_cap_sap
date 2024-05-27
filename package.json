@@ -9,6 +9,8 @@
         "@sap/cds": "^7",
         "@sap/cds-hana": "^2",
         "@sap/xssec": "^3",
+        "archiver": "^7.0.1",
+        "axios": "^1.7.1",
         "express": "^4"
     },
     "devDependencies": {
@@ -17,9 +19,11 @@
         "@sap/eslint-plugin-cds": "^3",
         "@sap/ux-specification": "^1.120.9",
         "eslint": "^9",
+        "jest": "^29.7.0",
         "rimraf": "^3.0.2"
     },
     "scripts": {
+        "test": "jest test/Entity.test.js",
         "start": "cds-serve",
         "watch-pfe_rahma1": "cds watch --open pfe_rahma1/webapp/index.html?sap-ui-xx-viewCache=false",
         "undeploy": "cf undeploy pfe_rahma --delete-services --delete-service-keys --delete-service-brokers",
@@ -29,6 +33,12 @@
     },
     "cds": {
         "requires": {
+            "db": {
+                "kind": "sqlite",
+                "credentials": {
+                  "url": "db.sqlite"
+                }
+              },
             "[production]": {
                 "db": "hana",
                 "auth": "xsuaa"
