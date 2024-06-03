@@ -6,16 +6,60 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^7",
+    "@sap/cds": "^7.9.0",
+    "@sap/cds-hana": "^2",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^7",
-    "@sap/eslint-plugin-cds": "^3",
-    "eslint": "^9"
+    "chai": "^5.1.0",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.4.0",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
-    "start": "cds-serve"
-  }
+    "start": "cds-serve",
+    "undeploy": "cf undeploy clientproject --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-oui": "cds watch --open oui/webapp/index.html?sap-ui-xx-viewCache=false",
+    "test": "mocha test/test.cjs",
+    "watch-rahma": "cds watch --open rahma/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-rahmapp": "cds watch --open rahmapp/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "NorthWind": {
+        "kind": "odata",
+        "model": "srv/external/NorthWind"
+      }
+    },
+    "[local]": {
+      "requires": {
+        "NorthWind": {
+          "kind": "odata",
+          "model": "srv/external/NorthWind",
+          "credentials": {
+            "url": "https://services.odata.org/Experimental/OData/OData.svc"
+          }
+        }
+      }
+    },
+    "[production]": {
+      "requires": {
+        "NorthWind": {
+          "kind": "odata",
+          "model": "srv/external/NorthWind",
+          "credentials": {
+            "destination": "NorthWind"
+          }
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/rahma",
+    "app/rahmapp"
+  ]
 }

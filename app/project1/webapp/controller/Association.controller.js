@@ -95,6 +95,56 @@ sap.ui.define([
           });
       }
     },
+    onDownloadFolder: function() {
+      var sPath = "/home/user/projects/finalproject/adam";
+
+      // Create a new hyperlink element
+      var link = document.createElement("a");
+      link.href = sPath;
+  
+      // Set the download attribute with a filename (optional)
+      link.download = "MyDownloadedFile.zip";
+  
+      // Append link to the body
+      document.body.appendChild(link);
+  
+      // Trigger the click event on the link
+      link.click();
+  
+      // Remove the link after downloading
+      document.body.removeChild(link);
+  },
+  onDownloadZip: function() {
+    var sServiceUrl = "/odata/v4/models/downloadZip"; // Adjust based on your actual service URL
+    var sActionUrl = sServiceUrl + "zipFolder";
+    fetch(sServiceUrl, {
+      method: 'POST', // Assuming you are calling a CAP action
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
+  .then(response => {
+      if (!response.ok) throw new Error("Failed to start download: " + response.statusText);
+      return response.blob();
+  })
+  .then(blob => {
+      // Create a URL for the blob object and download it
+      var url = window.URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = "downloaded_zipfile.zip"; // This could be dynamically set if needed
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+  })
+  .catch(err => {
+      console.error('Error downloading the file:', err);
+      sap.m.MessageToast.show("Failed to download ZIP file.");
+  });
+},
+
+  
 
 
 
@@ -216,21 +266,53 @@ sap.ui.define([
       }.bind(this));
     },
     /////////////////////service generator
-    generateService: function () {
-      var cdsModel = "service modelsService {\n";
-
-      this.table.forEach(function (entity) {
-        cdsModel += "\n\tentity " + entity + " as projection on models." + entity + ";";
+    openConfirmationDialog1: function(onConfirm) {
+      var dialog = new sap.m.Dialog({
+        title: 'Confirmer la génération',
+        type: 'Message',
+        content: new sap.m.Text({ text: 'Voulez-vous vraiment générer le modèle CDS?' }),
+        beginButton: new sap.m.Button({
+          text: 'Confirmer',
+          press: function () {
+            dialog.close();
+            onConfirm(); // Exécute la fonction de callback sur confirmation
+          }
+        }),
+        endButton: new sap.m.Button({
+          text: 'Annuler',
+          press: function () {
+            dialog.close();
+          }
+        }),
+        afterClose: function() {
+          dialog.destroy();
+        }
       });
-
-
-      cdsModel += "\n}";
-
-
-      console.log("Generated CDS Model:", cdsModel);
-      this.onAppendServiceToFilePress(`using models from '../db/models.cds'; \n` + cdsModel);
-      this.showCDSserviceGenerationPopup();
+    
+      dialog.open();
     },
+    
+    
+    generateService: function () {
+      var that = this; // Référence au contexte actuel pour utilisation dans les fonctions de callback
+    
+      // Dialogue de confirmation
+      this.openConfirmationDialog1(function() {
+        var cdsModel = "service modelsService {\n";
+    
+        that.table.forEach(function (entity) {
+          cdsModel += "\n\tentity " + entity + " as projection on models." + entity + ";";
+        });
+    
+        cdsModel += "\n}";
+    
+        console.log("Generated CDS Model:", cdsModel);
+        that.onAppendServiceToFilePress(`using models from '../db/models.cds'; \n` + cdsModel);
+        that.showCDSserviceGenerationPopup();
+        sap.m.MessageToast.show("Génération du modèle de service CDS complétée.");
+      });
+    },
+    
     generateService2: function (test) {
       var cdsModel = "service modelsService {\n";
       var table2 = [test]; // Start with the 'test' element in table2
@@ -267,230 +349,15 @@ sap.ui.define([
       oEvent.getSource().getParent().close();
     },
 
+   
+    
 
 
 
 
 
 
-
-    OnCdsgen: function () {
-
-      var oModel = this.getView().getModel("mainModel");
-      var sUrl1 = oModel.sServiceUrl + "/Entity";
-      var sUrl2 = oModel.sServiceUrl + "/Field";
-      var sUrl3 = oModel.sServiceUrl + "/Association"; // URL to fetch associations
-
-      if (oModel) {
-        console.log("Main model found");
-
-        // Fetch entity data
-        fetch(sUrl1)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(entityData => {
-            console.log("Entity Data:", entityData);
-
-            const entities = entityData.value;
-            // Fetch field data
-            fetch(sUrl2)
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(fields => {
-                console.log("Fields:", fields);
-                const entityDataa = [];
-
-                // Associez les champs aux entités
-                entities.forEach(entity => {
-                  const entityFields = fields.value.filter(field => field.fld_ID === entity.ID);
-
-                  // Ajoutez les données de l'entité avec ses champs associés au tableau
-                  entityDataa.push({
-                    ID: entity.ID,
-                    name: entity.name,
-                    fields: entityFields
-                  });
-                });
-
-                // Fetch association data
-                fetch(sUrl3)
-                  .then(response => {
-                    if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-
-                  })
-                  .then(associations => {
-                    console.log("Associations:", associations);
-
-
-
-                    const cdsEntities = this.generateCDSEntities(entityData.value, fields.value,
-
-                      associations.value);
-
-
-                  })
-                  .catch(error => {
-                    console.error("Error retrieving associations:", error);
-                  });
-
-                // Process entity and field data
-                // Set the entity data to the view model or do other operations
-              })
-              .catch(error => {
-                console.error("Error retrieving fields:", error);
-              });
-          })
-          .catch(error => {
-            console.error("Error retrieving entities:", error);
-          });
-      } else {
-        console.error("Main model not found");
-      }
-      this.showCDSmodelGenerationPopup();
-
-    },
-
-
-
-
-    generateCDSEntities: async function (entityData, fieldsData, associationsData) {
-      const cdsEntities = [];
-
-      for (const entity of entityData) {
-        const entityName = entity.name;
-        const entityFields = fieldsData.filter(field => field.fld_ID === entity.ID);
-
-        let cdsEntity = `entity ${entityName} {`;
-
-        // Process fields
-        for (const field of entityFields) {
-          if (field.annotations == null) {
-            let fieldString = `\n\t${field.value}: ${field.type} `;
-            if (field.iskey) {
-              fieldString = `\n\tkey ${field.value}: ${field.type} `;
-            }
-            cdsEntity += fieldString + ';';
-          }
-          else {
-            let fieldString = `\n\t${field.value}: ${field.type} ${field.annotations}`;
-            if (field.iskey) {
-              fieldString = `\n\tkey ${field.value}: ${field.type} ${field.annotations}`;
-            }
-            cdsEntity += fieldString + ';';
-          }
-
-        }
-
-        const entityAssociations = associationsData.filter(association =>
-          association.entitySource_ID === entity.ID || association.entityTarget_ID === entity.ID
-        );
-        var ismanytomany = false;
-
-        for (const association of entityAssociations) {
-          const isManyToOne = association.type === 'ManyToOne';
-          const isOneToOne = association.type === 'OneToOne';
-          const isManyToMany = association.type === 'ManyToMany';
-          const isSourceEntity = association.entitySource_ID === entity.ID;
-          const isTargetEntity = association.entityTarget_ID === entity.ID;
-
-          if (isManyToOne && isSourceEntity) {
-            const targetEntity = entityData.find(e => e.ID === association.entityTarget_ID);
-            if (targetEntity) {
-              cdsEntity += `\n\tfld : Association to ${targetEntity.name};`;
-            }
-          }
-
-          if (isManyToOne && isTargetEntity) {
-            const sourceEntity = entityData.find(e => e.ID === association.entitySource_ID);
-            if (sourceEntity) {
-              const lowersourceEntity = sourceEntity.name.toLowerCase();
-              cdsEntity += `\n\t${lowersourceEntity} : Association to many ${sourceEntity.name}`;
-
-              cdsEntity += `\ton ${lowersourceEntity}.fld = $self;`;
-            }
-          }
-          if (isOneToOne && isSourceEntity) {
-            const targetEntity = entityData.find(e => e.ID === association.entityTarget_ID);
-            if (targetEntity) {
-              var st = entity.name.toLowerCase();
-
-              cdsEntity += `\n\t${st}${targetEntity.name} : Association to ${targetEntity.name};`;
-
-            }
-          }
-          if (isOneToOne && isTargetEntity) {
-            const sourceEntity = entityData.find(e => e.ID === association.entitySource_ID);
-            if (sourceEntity) {
-              var st = sourceEntity.name.toLowerCase()
-
-              cdsEntity += `\n\t${st} : Association to ${sourceEntity.name};`;
-
-            }
-          }
-
-          if (isManyToMany && isSourceEntity) {
-            ismanytomany = true;
-            const targetEntity = entityData.find(e => e.ID === association.entityTarget_ID);
-
-
-            var str1 = entity.name.toLowerCase();
-            var str2 = targetEntity.name.toLowerCase();
-            var ch1 = entity.name;
-            var ch2 = targetEntity.name;
-
-
-            var newname = ch1 + "2" + ch2;
-            cdsEntity += `\n\t${str2}s : Composition of many ${entity.name}To${targetEntity.name} on ${str2}s.${str1}=$self;`;
-
-
-
-          }
-          if (isManyToMany && isTargetEntity) {
-            const sourceEntity = entityData.find(e => e.ID === association.entitySource_ID);
-            var str1 = sourceEntity.name.toLowerCase();
-            var str2 = entity.name.toLowerCase();
-
-            cdsEntity += `\n\t${str1}s : Composition of many ${sourceEntity.name}To${entity.name} on ${str1}s.${str2}=$self;`;
-          }
-        }
-
-        if (ismanytomany === true) {
-
-          cdsEntity += `\n}\n`;
-          cdsEntity += `entity ${ch1}To${ch2} {
-      \n\tkey ${str1} : Association to ${ch1};
-      \n\tkey ${str2} : Association to ${ch2};
-      \n}\n`;
-
-        }
-        else {
-          cdsEntity += `\n}\n`;
-        }
-        cdsEntities.push(cdsEntity);
-      }
-      this.onGitClone();
-      await this.sleep(2000);
-      this.onAppendTextToFilePress(` namespace models;
-      using { cuid, managed} from '@sap/cds/common';\n`+ cdsEntities.join(''))
-
-
-      return cdsEntities.join('');
-    },
-    sleep: function (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-  },
-  
+   
     /////////////////////////////////////////////////////////////////////////
     UIgen: function () {
       var entityName = this.test;
@@ -590,66 +457,25 @@ sap.ui.define([
 
     },
 
-    onGitClone: function() {
-      var command = "cd /home/vcap/app && git clone https://github.com/rahma216/pfeProject_Rahma.git";
-      var oMainModel = this.getOwnerComponent().getModel("mainModel");
-      var oAction = oMainModel.bindContext("/ExecuteCommand(...)");
-    
-      oAction.setParameter('command', command);
-      oAction.execute().then(
-        function () {
-          MessageToast.show("Command executed successfully");
-        },
-        function (oError) {
-          MessageToast.show("Error executing command");
-        }
-      );
-    },
-    
-    onAppendTextToFilePress: function(data) {
-      var oMainModel = this.getOwnerComponent().getModel("mainModel");
-      var oAction = oMainModel.bindContext("/appendTextToFile(...)");
-    
-      oAction.setParameter('content', data);
-      oAction.execute().then(
-        function () {
-          MessageToast.show("Text appended to file successfully");
-        },
-        function (oError) {
-          MessageToast.show("Error appending text to file");
-        }
-      );
-    }
-,    
-  
-  _fnFetchResult: async function(oResult) {
-      var header = oResult.headers.get('content-type');
-      var isJson = header.includes('application/json');
-      var data = isJson ? await oResult.json() : null;
-      if (!isJson) {
-          var error = "No data found";
-          sap.ui.core.BusyIndicator.hide();
-          throw new Error(error);
-      } else {
-          return data;
-      }
-  }
-,  
-
+   
     onAppendServiceToFilePress: function (data) {
 
-        var oMainModel = this.getOwnerComponent().getModel("mainModel");
-        // var oAction = oMainModel.bindContext("/appendTextToFile(...)");
-        var oAction = oMainModel.bindContext("/appendServiceToFile(...)");
-         oAction.setParameter('content', data);
-     
-         oAction.execute().then(
-           function () {
-               MessageToast.show("Invoice created for sales order ");
-           },
-           function (oError) {
-               MessageToast.show("Error!!! ");
-           });
+
+      fetch("/odata/v4/models/appendServiceToFile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: data }) // Pass the variable in the request body
+      })
+        .then(response => response.json())
+        .then(data1 => {
+          console.log("Action invoked successfully:", data1);
+        })
+        .catch(error => {
+          console.error("Error invoking action:", error);
+        });
+
     }
     ,
     onAppendUIToFilePress: function (data) {
@@ -924,81 +750,7 @@ sap.ui.define([
         });
 
     },
-    openConfirmationDialog1: function(onConfirm) {
-      var dialog = new sap.m.Dialog({
-        title: 'Confirmer la génération',
-        type: 'Message',
-        content: new sap.m.Text({ text: 'Voulez-vous vraiment générer le modèle CDS?' }),
-        beginButton: new sap.m.Button({
-          text: 'Confirmer',
-          press: function () {
-            dialog.close();
-            onConfirm(); // Exécute la fonction de callback sur confirmation
-          }
-        }),
-        endButton: new sap.m.Button({
-          text: 'Annuler',
-          press: function () {
-            dialog.close();
-          }
-        }),
-        afterClose: function() {
-          dialog.destroy();
-        }
-      });
-   
-      dialog.open();
-    },
-   
-   
-    generateService: function () {
-      var that = this; // Référence au contexte actuel pour utilisation dans les fonctions de callback
-   
-      // Dialogue de confirmation
-      this.openConfirmationDialog1(function() {
-        var cdsModel = "service modelsService {\n";
-   
-        that.table.forEach(function (entity) {
-          cdsModel += "\n\tentity " + entity + " as projection on models." + entity + ";";
-        });
-   
-        cdsModel += "\n}";
-   
-        console.log("Generated CDS Model:", cdsModel);
-        that.onAppendServiceToFilePress(`using models from '../db/models.cds'; \n` + cdsModel);
-        that.showCDSserviceGenerationPopup();
-        sap.m.MessageToast.show("Génération du modèle de service CDS complétée.");
-      });
-    },
-/*     onDownloadZip: function() {
-      var sServiceUrl = "/odata/v4/models/downloadZip"; // Adjust based on your actual service URL
-    
-      fetch(sServiceUrl, {
-          method: 'POST', // Specify the method as POST
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (!data.zipPath) {
-              throw new Error('No ZIP path returned');
-          }
-          var zipUrl = data.zipPath;
-          var link = document.createElement('a');
-          link.href = zipUrl;
-          link.download = "PFE_Rahma.zip"; // Set the desired file name here
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-      })
-      .catch(err => {
-          console.error('Error downloading the file', err);
-          sap.m.MessageToast.show("Failed to download ZIP file.");
-      });
-    } */
-    
-    
+
 
 
 

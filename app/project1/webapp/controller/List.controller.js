@@ -171,26 +171,79 @@ sap.ui.define([
                // this.rebindTable(this.oEditableTemplate, "Edit");
             },
             onDelete: function () {
-
                 var oSelected = this.byId("table0").getSelectedItem();
+            
                 if (oSelected) {
-                    var oSalesOrder = oSelected.getBindingContext("mainModel").getObject().soNumber;
-
-                    oSelected.getBindingContext("mainModel").delete("$auto").then(function () {
-                        MessageToast.show(oSalesOrder + " SuccessFully Deleted");
-                    }.bind(this), function (oError) {
-                        MessageToast.show("Deletion Error: ", oError);
-                    });
+                    var oContext = oSelected.getBindingContext("mainModel");
+                    var oSalesOrder = oContext.getObject().soNumber;
+                    console.log("Binding Context:", oContext);
+            
+                    var sPath = oContext.getPath();
+            
+                    // Extract the ID from the path using a regular expression
+                    var aMatches = sPath.match(/\/Entity\('(\d+)'\)/);
+                    if (aMatches && aMatches[1]) {
+                        var sID = aMatches[1];
+                        console.log("Selected Item ID:", sID);
+            
+                        oContext.delete("$auto").then(function () {
+                            var oModel = this.getView().getModel("mainModel");
+                            var sUrl1 = oModel.sServiceUrl + "/Field";
+            
+                            // Fetch data
+                            fetch(sUrl1)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    data.value.forEach(item => {
+                                        if (item.fld_ID === sID) {
+                                            console.log("Matching Data:", item.ID);
+                                            
+                                            let oBindList = oModel.bindList("/Field");
+                                            let aFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, item.ID);
+                                    
+                                            oBindList.filter(aFilter).requestContexts().then(function (aContexts) {
+                                                if (aContexts.length > 0) {
+                                                    aContexts[0].delete();
+                                                    console.log("Deleted Item ID:", item.ID);
+                                                } else {
+                                                    console.log("No matching context found for ID:", item.ID);
+                                                }
+                                            }).catch(error => {
+                                                console.error("Error deleting item:", error);
+                                            });
+                                        }
+                                    });
+                                    
+                                })
+                                .catch(error => {
+                                    console.error("Error retrieving associations:", error);
+                                });
+            
+                            MessageToast.show(oSalesOrder + " Successfully Deleted");
+                        }.bind(this)).catch(function (oError) {
+                            MessageToast.show("Deletion Error: " + oError.message);
+                        });
+                    } else {
+                        MessageToast.show("Could not extract ID from the selected item.");
+                    }
                 } else {
                     MessageToast.show("Please Select a Row to Delete");
                 }
-
             },
+            
             onFetchAssociations: function() { 
              
                 var oModel = this.getView().getModel("mainModel");
                 var sUrl = oModel.sServiceUrl + "/Association";
-                var sUrl1 = oModel.sServiceUrl + "/Entity";  // Assurez-vous que le nom de l'entité est correct
+                let tabS=[];
+                let tabT=[];
+                let typ=[];
+                var sUrl2 = oModel.sServiceUrl + "/Entity";
                 fetch(sUrl)
                     .then(response => {
                         if (!response.ok) {
@@ -201,40 +254,91 @@ sap.ui.define([
                     .then(data => {
                         var Model = this.getOwnerComponent().getModel("associationModel");
 
+                        /////////////////////////////
+                        var associations=data.value;
+                        associations.forEach(element => {
+                     
+                            tabS.push(element.entitySource_ID);
+                            tabT.push(element.entityTarget_ID);
+                            typ.push(element.type);
+
+                       
+                        });
+                       
+                        fetch(sUrl2)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data1 => {
+                            var entities=data1.value;
+                            for(let i=0;i<tabS.length;i++){
+                                entities.forEach(element => {
+                            
+                                    if (element.ID == tabS[i]) {
+                                      tabS[i]=element.name;
+                                    }
+                               
+                                });
+
+                            }
+                            for(let i=0;i<tabT.length;i++){
+                                entities.forEach(element => {
+                        
+                                    if (element.ID == tabT[i]) {
+                                      tabT[i]=element.name;
+                                    }
+                               
+                                });
+
+                            }
+                            console.log(tabS)
+                            console.log(tabT)
+                            var combinedData = tabS.map((sItem, index) => ({
+                                entitySource1: sItem,
+                                entityTarget1: tabT[index],
+                                type: typ[index]
+                            }));
+
+                            var associationModel = this.getOwnerComponent().getModel("associationModel");
+                            associationModel.setData({
+                                value: combinedData
+                            });
+                                        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",associationModel.getData());
 
 
-                        Model.setData(data);
+                            //var Model = this.getOwnerComponent().getModel("associationModel");
+    
+    
+                         
+    
+    
+                        })
+                        .catch(error => {
+                            console.error("Failed to fetch associations:", error);
+                        });
+                    
+                     // Créer un tableau d'objets avec la structure souhaitée
+        
+                          
+                      // Mettre les données dans le modèle
+         
 
-            
-                        // Vous pouvez également ici rafraîchir le binding du tableau si nécessaire
+                        //////////////////////////////////
+
+
+                        
+                        var associationModel = this.getOwnerComponent().getModel("associationModel");
+                        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu2",associationModel.getData());
 
 
                     })
                     .catch(error => {
                         console.error("Failed to fetch associations:", error);
                     });
-                    fetch(sUrl1)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        var Model1 = this.getOwnerComponent().getModel("serviceModel");
-
-
-
-                        Model1.setData(data);
-
-            
-                        // Vous pouvez également ici rafraîchir le binding du tableau si nécessaire
-
-
-                    })
-                    .catch(error => {
-                        console.error("Failed to fetch associations:", error);
-                    });
+             
                    
                    
                     
@@ -244,8 +348,7 @@ sap.ui.define([
                 var oItem = oEvent.getSource();
                 var oSelectedContext = oItem.getBindingContext("mainModel");
                 var selectedObj = oSelectedContext.getObject();
-                var oModel = this.getOwnerComponent().getModel("detailModel");
-                oModel.setData(selectedObj);
+              
                 this.onFetchAssociations() ; 
                 
 

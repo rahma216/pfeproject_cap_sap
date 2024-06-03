@@ -5,8 +5,8 @@ entity Order {
 	fld : Association to Customer;
 }
 entity Customer {
-	key test1: String @readonly;
-	test2: String @readonly;
+	key name: String @readonly;
+	phone: String @readonly;
 	order : Association to many Order	on order.fld = $self;
 	client : Association to Client;
 }
@@ -26,4 +26,5 @@ entity Client {
 	products : Composition of many ProductToClient on products.client=$self;
 	clientCustomer : Association to Customer;
 }
+
 

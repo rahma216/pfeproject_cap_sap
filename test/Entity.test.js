@@ -52,20 +52,20 @@ describe('Model Service Test Suite', () => {
     expect(fetchDeleted.length).toBe(0);
   });
   it('should update an entity', async () => {
-    const originalData = { ID: "11", name: "initial name" };
+    const originalData = { ID: "4", name: "initial name" };
     const updateData = { name: "updated name" };
  
     // Assuming the entity is already created, if not, you should create it as part of setup or in a separate test
    // await modelService.create('Entity').entries(originalData);
  
     // Perform the update
-    const updateResponse = await modelService.update('Entity').set(updateData).where({ ID: "11" });
+    const updateResponse = await modelService.update('Entity').set(updateData).where({ ID: "4" });
  
     // Optionally check the response of the update operation, if it provides such data
-    expect(updateResponse).toEqual({ ID: "11", name: "updated name" });
+    expect(updateResponse).toEqual({ ID: "4", name: "updated name" });
  
     // Fetch the updated entity to verify changes
-    const updatedEntity = await modelService.read('Entity').where({ ID: "11" });
+    const updatedEntity = await modelService.read('Entity').where({ ID: "4" });
     expect(updatedEntity[0].name).toEqual("updated name");
   });
   it('should create a field with entity reference with id 700', async () => {
@@ -98,6 +98,22 @@ describe('Model Service Test Suite', () => {
     expect(fieldCreated.annotations).toBe('@readonly');
     expect(fieldCreated.iskey).toBe(false);
 });
+it('should update a field', async () => {
+  const updateData = { value: "updated value" };
+ 
+  // Assuming the entity is already created, if not, you should create it as part of setup or in a separate test
+ // await modelService.create('Entity').entries(originalData);
+ 
+  // Perform the update
+  const updateResponse = await modelService.update('Field').set(updateData).where({ ID: "700" });
+ 
+  // Optionally check the response of the update operation, if it provides such data
+  expect(updateResponse).toEqual({ ID: "700", value: "updated value" });
+ 
+  // Fetch the updated entity to verify changes
+  const updatedEntity = await modelService.read('Field').where({ ID: "700" });
+  expect(updatedEntity[0].value).toEqual("updated value");
+});
 it('should delete a field', async () => {
   const dataToDelete = { ID: "700" }; // Assuming 'ID' is the primary key for entity identification
   const deleteResponse = await modelService.delete('Field').where(dataToDelete);
@@ -109,22 +125,7 @@ it('should delete a field', async () => {
   const fetchDeleted = await modelService.read('Field').where(dataToDelete);
   expect(fetchDeleted.length).toBe(0);
 });
-it('should update a field', async () => {
-  const updateData = { value: "updated value" };
- 
-  // Assuming the entity is already created, if not, you should create it as part of setup or in a separate test
- // await modelService.create('Entity').entries(originalData);
- 
-  // Perform the update
-  const updateResponse = await modelService.update('Field').set(updateData).where({ ID: "1" });
- 
-  // Optionally check the response of the update operation, if it provides such data
-  expect(updateResponse).toEqual({ ID: "1", value: "updated value" });
- 
-  // Fetch the updated entity to verify changes
-  const updatedEntity = await modelService.read('Field').where({ ID: "1" });
-  expect(updatedEntity[0].value).toEqual("updated value");
-});
+
  
  
  

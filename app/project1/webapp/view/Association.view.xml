@@ -1,77 +1,91 @@
 <mvc:View
     controllerName="app.project1.controller.Association"
     xmlns="sap.m"
-
+ 
     xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout"
+    xmlns:l="sap.ui.layout"
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
     xmlns:card="sap.f.cards"
     xmlns:w="sap.ui.integration.widgets"
     displayBlock="true"
     height="100%"
-		xmlns:core="sap.ui.core">
-		<Page showHeader="false" > 
-			<headerContent>
-			<Button icon="sap-icon://write-new-document" tooltip="Share" />
-		</headerContent>
-    		<ScrollContainer height="100%" width="100%" vertical="true">
+        xmlns:core="sap.ui.core">
+        <Page showHeader="false" >
+            <headerContent>
+            <Button icon="sap-icon://write-new-document" tooltip="Share" />
+        </headerContent>
+            <ScrollContainer height="100%" width="100%" vertical="true">
                 <ObjectHeader
                 title=" Elevate your project by generating a bespoke service file. "
                 intro="Choose the entities that best suit your needs and enrich your service ecosystem effortlessly."
                 responsive="true"
                 titleLevel="H5"
             />
-		<HBox renderType="Bare">
-			<List
-				id="list1"
-				headerText="Entities"
-				class="sapUiSmallMargin"
-				width="200px"
-				items="{path: '/' }">
-					<StandardListItem title="{name}" description="{ID}" info="created" iconInset="false"  infoState="Success" icon="sap-icon://hr-approval" 	infoStateInverted="true" />
-			</List>
-
-				
-			<f:GridContainer
-				id="grid1"
-				class="sapUiSmallMargin"
-				width="100%"
-				snapToRow="true"
-    items="{ path: '/'}">
- 
-  
-			
-				<f:layout>
-					<f:GridContainerSettings rowSize="84px" columnSize="84px" gap="8px" />
-				</f:layout>
-				<f:layoutXS>
-					<f:GridContainerSettings rowSize="70px" columnSize="70px" gap="8px" />
-				</f:layoutXS>
-
-				<f:Card>
-					
-					<f:layoutData>
-					
-						<f:GridContainerItemLayoutData minRows="1" columns="3" />
-					</f:layoutData>
-					<f:header>
-						<card:Header title="{name}" />
-					</f:header>
-						<f:content>
-
-
-		</f:content>
-				</f:Card>
-					 
+        <HBox renderType="Bare">
+            <List
+                id="list1"
+                headerText="Entities"
+                class="sapUiSmallMargin"
+                width="200px"
+                items="{path: '/' }">
+                    <StandardListItem title="{name}" description="{ID}" info="created" iconInset="false"  infoState="Success" icon="sap-icon://hr-approval"     infoStateInverted="true" />
+            </List>
            
+ 
+               
+            <f:GridContainer
+                id="grid1"
+                class="sapUiSmallMargin"
+                width="100%"
+                snapToRow="true"
+                  items="{ path: '/'}">
+ 
+ 
+           
+                <f:layout>
+                    <f:GridContainerSettings rowSize="84px" columnSize="84px" gap="8px" />
+                </f:layout>
+                <f:layoutXS>
+                    <f:GridContainerSettings rowSize="70px" columnSize="70px" gap="8px" />
+                </f:layoutXS>
+ 
+                <f:Card>
+                   
+                    <f:layoutData>
+                   
+                        <f:GridContainerItemLayoutData minRows="1" columns="3" />
+                    </f:layoutData>
+                    <f:header>
+                        <card:Header title="{name}" />
+                    </f:header>
+                        <f:content>
+ 
+ 
+                      </f:content>
+                </f:Card>
+               
+                     
+           
+ 
+            </f:GridContainer>
+           
+             
+       
+        </HBox>
+        <Button
+                    id="aa"
+                    text="GenenrateService"
+                    press="generateService"
+                    type="Accept"
+                    icon="sap-icon://write-new-document"
+                    width="100%"
+                />
+             
+             <VBox>
 
-			</f:GridContainer>
-		
-		</HBox>
-			
-			 <VBox>
-        <ObjectHeader title="Welcome!Let's bring your ideas to life. Start by generating your personalized ui"
+
+        <ObjectHeader title="Let's bring your ideas to life. Start by generating your personalized UI"
                             intro="Template Selection : Choose your application template."
                             responsive="true" titleLevel="H5"/>
            
@@ -200,7 +214,7 @@
            <Dialog
                 id="mainDialog"
                 title="List Report"
-                
+               
             >
                 <content>
                     <VBox
@@ -232,7 +246,7 @@
                                <Select id="choice1" items="{rahmaModel>/Entity}" change=".onSelectChange" required="true" selectedItem="{rahmaModel>name}">
     <core:Item key="{rahmaModel>name}" text="{rahmaModel>name}" />
 </Select>
-
+ 
                             </form:content>
                         </form:SimpleForm>
                     </VBox>
@@ -246,7 +260,7 @@
                                 text="GenUI"
                                 press=".onExecuteCommandPress"
                              icon="sap-icon://sap-ui5"
-
+ 
                             />
                             <Button
                                 id="Reject"
@@ -255,8 +269,8 @@
                                 press=".onCancelDialog"
                                 ariaHasPopup="Dialog"
                                icon="sap-icon://decline"
-
-                                
+ 
+                               
                             />
                         </content>
                     </Toolbar>
@@ -307,7 +321,7 @@
                                 text="GenUI"
                                 press=".onExecuteCommandPressCustomPage"
                                icon="sap-icon://sap-ui5"
-
+ 
                             />
                             <Button
                                 id="Reject1"
@@ -316,7 +330,7 @@
                                 press=".onCancelDialog1"
                                 ariaHasPopup="Dialog"
                                  icon="sap-icon://decline"
-
+ 
                             />
                         </content>
                     </Toolbar>
@@ -369,7 +383,7 @@
                                 text="GenUI"
                                 press=".onExecuteCommandPressBasicPage"
                                 icon="sap-icon://sap-ui5"
-
+ 
                             />
                             <Button
                                 id="Reject2"
@@ -378,51 +392,19 @@
                                 press=".onCancelDialog3"
                                 ariaHasPopup="Dialog"
                                  icon="sap-icon://decline"
-
+ 
                             />
                         </content>
                     </Toolbar>
                 </footer>
             </Dialog>
-	
-		
-
-
-	</ScrollContainer>
-		<footer>
-			<OverflowToolbar id="otbFooter">
-				<ToolbarSpacer/>
-		<Button
-                    id="cds"
-                    text="GenerateCds"
-                    press=".OnCdsgen"
-                    type="Accept"
-                    icon="sap-icon://clinical-order"
-                />
-                <Button
-                    id="aa"
-                    text="GenenrateService"
-                    press="generateService"
-                    type="Accept"
-                    icon="sap-icon://write-new-document"
-                />
-                  <Button
-                    id="aa1"
-                    text="down"
-                    press="onDownloadZip"
-                    type="Accept"
-                    icon="sap-icon://write-new-document"
-                />
-              
-
-			
-				
-				
-
-
-			</OverflowToolbar>
-		</footer>
-	</Page>
-	
-
+   
+       
+ 
+ 
+    </ScrollContainer>
+   
+    </Page>
+   
+ 
 </mvc:View>

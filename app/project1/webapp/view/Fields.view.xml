@@ -96,6 +96,7 @@
                             <m:Text
                                 id="fldd"
                                 text="{mainModel>ID}"
+                                visible="false"
                             />
                             <m:Label text="Entity Name" />
                             <m:Text text="{mainModel>name}" />
@@ -131,7 +132,6 @@
                                             justifyContent="Center"
                                         >
                                             <m:HBox id="fields">
-                                    
                                                 <m:ComboBox
                                                     id="key"
                                                     placeholder="PrimaryKey"
@@ -251,7 +251,7 @@
                                             <m:dependents>
                                                 <m:Dialog
                                                     id="OpenDialog2"
-                                                    title="Create Sales Order"
+                                                    title="Update your field"
                                                 >
                                                     <m:buttons>
                                                         <m:Button
@@ -308,7 +308,6 @@
                                             press=".onSupplierPress"
                                         >
                                             <m:cells>
-                                              
                                                 <m:Text
                                                     id="id4"
                                                     text="{mainModel>value}"
@@ -329,7 +328,6 @@
                                         </m:ColumnListItem>
                                     </m:items>
                                     <m:columns>
-                                    
                                         <m:Column>
                                             <m:header>
                                                 <m:Label text="value" />
@@ -409,7 +407,7 @@
                                 />
                             </m:HBox>
                             <m:Button
-                                text="Show Table"
+                                text="Show Associations"
                                 press="onFetchAssociations"
                             />
 
@@ -423,7 +421,7 @@
                                     <m:OverflowToolbar>
                                         <m:content>
                                             <m:Title
-                                                text="Entities Properties"
+                                                text="Associations"
                                                 level="H2"
                                             />
                                             <m:ToolbarSpacer />
@@ -473,11 +471,12 @@
                                     </m:OverflowToolbar>
                                 </m:headerToolbar>
                                 <m:columns>
-                                     <m:Column>
-                                        <m:Label text="Source ID" />
+                                
+                                    <m:Column>
+                                        <m:Label text="Source Entity" />
                                     </m:Column>
                                     <m:Column>
-                                        <m:Label text="Target ID" />
+                                        <m:Label text="Target Entity" />
                                     </m:Column>
                                     <m:Column>
                                         <m:Label text="Type" />
@@ -486,12 +485,12 @@
                                 <m:items>
                                     <m:ColumnListItem>
                                         <m:cells>
-                            
+                    
                                             <m:ObjectIdentifier
-                                                title="{associationsModel>entitySource_ID}"
+                                                title="{associationsModel>entitySource1}"
                                             />
                                             <m:ObjectIdentifier
-                                                title="{associationsModel>entityTarget_ID}"
+                                                title="{associationsModel>entityTarget1}"
                                             />
                                             <m:Text
                                                 text="{associationsModel>type}"
@@ -500,6 +499,14 @@
                                     </m:ColumnListItem>
                                 </m:items>
                             </m:Table>
+                            <m:Button
+                                id="cds"
+                                text="GenerateCds"
+                                press=".OnCdsgen"
+                                width="100%"
+                                type="Transparent"
+                                icon="sap-icon://clinical-order"
+                            />
                         </m:VBox>
                     </ObjectPageSubSection>
                 </subSections>

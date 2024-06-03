@@ -1,6 +1,6 @@
-ID,createdAt,createdBy,modifiedAt,modifiedBy,value,type,iskey,annotations,fld_ID
-1,2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,test1,String,true,@readonly,2
-2,2024-03-19T09:42:08.985Z,anonymous,2024-03-19T09:42:08.985Z,anonymous,test2,String,false,@readonly,2
-53,2024-03-19T09:50:55.637Z,anonymous,2024-03-19T09:50:55.637Z,anonymous,test3,String,true,@readonly,3
-57,2024-03-19T09:50:49.015Z,anonymous,2024-03-19T09:50:49.015Z,anonymous,test4,String,false,@readonly,4
-88,2024-03-19T09:49:06.368Z,anonymous,2024-03-19T09:49:06.368Z,anonymous,test5,String,false,@mandatory,1
+createdAt,createdBy,modifiedAt,modifiedBy,value,type,iskey,annotations,fld_ID
+2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,test1,String,true,@readonly,2
+2024-03-19T09:42:08.985Z,anonymous,2024-03-19T09:42:08.985Z,anonymous,test2,String,false,@readonly,2
+2024-03-19T09:50:55.637Z,anonymous,2024-03-19T09:50:55.637Z,anonymous,test3,String,true,@readonly,3
+2024-03-19T09:50:49.015Z,anonymous,2024-03-19T09:50:49.015Z,anonymous,test4,String,false,@readonly,4
+2024-03-19T09:49:06.368Z,anonymous,2024-03-19T09:49:06.368Z,anonymous,test5,String,false,@mandatory,1
