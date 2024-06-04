@@ -1,17 +1,16 @@
-using modelsService as service from '../../srv/services';
-annotate service.Customer with @(
+using modelsService as service from '../../srv/services';annotate service.Customer with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'name',
-                Value : name,
+                Label : 'test1',
+                Value : test1,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'phone',
-                Value : phone,
+                Label : 'test2',
+                Value : test2,
             },
         ],
     },
@@ -26,14 +25,13 @@ annotate service.Customer with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'name',
-            Value : name,
+            Label : 'test1',
+            Value : test1,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'phone',
-            Value : phone,
+            Label : 'test2',
+            Value : test2,
         },
     ],
 );
-

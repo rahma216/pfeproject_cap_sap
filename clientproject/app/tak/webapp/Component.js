@@ -3,7 +3,7 @@ sap.ui.define(
     function (Component) {
         "use strict";
 
-        return Component.extend("rahmapp.Component", {
+        return Component.extend("tak.Component", {
             metadata: {
                 manifest: "json"
             }

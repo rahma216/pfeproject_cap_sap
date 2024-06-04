@@ -24,6 +24,7 @@
                         <m:Title
                             text="{mainModel>name}"
                             wrapping="true"
+                            id="rahma1"
                         />
                         <m:ObjectMarker
                             type="Favorite"
@@ -99,7 +100,7 @@
                                 visible="false"
                             />
                             <m:Label text="Entity Name" />
-                            <m:Text text="{mainModel>name}" />
+                            <m:Text id="rahma" text="{mainModel>name}" />
                         </form:content>
                     </form:SimpleForm>
                 </m:VBox>

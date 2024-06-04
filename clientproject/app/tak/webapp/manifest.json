@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "rahmapp",
+    "id": "tak",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.13.5",
-      "toolsId": "4f65a333-063e-4e63-9db0-8033b9e42b96"
+      "toolsId": "cf9c1e40-4860-4d20-b1b5-d074dd51d70a"
     },
     "dataSources": {
       "mainService": {
@@ -61,7 +61,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "rahmapp.i18n.i18n"
+          "bundleName": "tak.i18n.i18n"
         }
       },
       "": {

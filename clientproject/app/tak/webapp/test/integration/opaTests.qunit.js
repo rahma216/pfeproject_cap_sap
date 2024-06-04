@@ -1,15 +1,15 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'rahmapp/test/integration/FirstJourney',
-		'rahmapp/test/integration/pages/CustomerList',
-		'rahmapp/test/integration/pages/CustomerObjectPage'
+        'tak/test/integration/FirstJourney',
+		'tak/test/integration/pages/CustomerList',
+		'tak/test/integration/pages/CustomerObjectPage'
     ],
     function(JourneyRunner, opaJourney, CustomerList, CustomerObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
-            launchUrl: sap.ui.require.toUrl('rahmapp') + '/index.html'
+            launchUrl: sap.ui.require.toUrl('tak') + '/index.html'
         });
 
        

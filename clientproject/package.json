@@ -26,7 +26,8 @@
     "watch-oui": "cds watch --open oui/webapp/index.html?sap-ui-xx-viewCache=false",
     "test": "mocha test/test.cjs",
     "watch-rahma": "cds watch --open rahma/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-rahmapp": "cds watch --open rahmapp/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-rahmapp": "cds watch --open rahmapp/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-tak": "cds watch --open tak/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -60,6 +61,7 @@
   },
   "sapux": [
     "app/rahma",
-    "app/rahmapp"
+    "app/rahmapp",
+    "app/tak"
   ]
 }

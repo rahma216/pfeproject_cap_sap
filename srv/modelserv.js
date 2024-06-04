@@ -54,11 +54,11 @@ module.exports = cds.service.impl((srv) => {
         }
     }); */
 
-     
+   
  
     srv.on('appendTextToFile', async (req) => {
         const { content } = req.data; // Correctly capture the 'content' from the request data
-        const filePath = '/home/vcap/app/pfeProject_Rahma/db/models.cds'; // Ensure this path is correct
+        const filePath = '/home/user/projects/pfe_rahma/clientproject/db/models.cds'; // Ensure this path is correct
     
         try {
           // Append content to the file
@@ -73,7 +73,7 @@ module.exports = cds.service.impl((srv) => {
     
       srv.on('appendServiceToFile', async (req) => {
         const { content } = req.data; // Correctly capture the 'content' from the request data
-        const filePath = '/home/vcap/app/pfeProject_Rahma/srv/services.cds'; // Ensure this path is correct
+        const filePath = '/home/user/projects/pfe_rahma/clientproject/srv/services.cds'; // Ensure this path is correct
     
         try {
           // Append content to the file

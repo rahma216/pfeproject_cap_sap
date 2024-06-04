@@ -51,6 +51,10 @@ modules:
       - rahmapp.zip
       name: rahmapp
       target-path: resources/
+    - artifacts:
+      - tak.zip
+      name: tak
+      target-path: resources/
 - name: vdgtboui
   type: html5
   path: app/oui
@@ -74,6 +78,16 @@ modules:
 - name: rahmapp
   type: html5
   path: app/rahmapp
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: tak
+  type: html5
+  path: app/tak
   build-parameters:
     build-result: dist
     builder: custom

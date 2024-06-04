@@ -326,7 +326,7 @@ sap.ui.define([
       }
 
       console.log(this.table);
-      console.log("taaaablaaa", table2);
+
 
 
       table2.forEach(function (entity) {
@@ -661,7 +661,7 @@ sap.ui.define([
        var apptitle =oView.byId("apptitle").getValue().toLowerCase();
        var namespace =oView.byId("namespace").getValue().toLowerCase();
        var appdesc =oView.byId("appdesc").getValue().toLowerCase();
-       var Yocommand = "/home/user/projects/pfe/clientproject/yoListreport.sh " + Nameproj + " " + apptitle + " " + namespace + " " + appdesc;
+       var Yocommand = "/home/user/projects/pfe_rahma/clientproject/yoListreport.sh " + Nameproj + " " + apptitle + " " + namespace + " " + appdesc;
   
 
        fetch("/odata/v4/models/ExecuteCommand", {

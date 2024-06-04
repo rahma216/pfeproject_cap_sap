@@ -1,2 +1,2 @@
 
-using from './rahmapp/annotations';
+using from './tak/annotations';
