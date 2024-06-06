@@ -111,7 +111,7 @@
             <ObjectPageSection>
                 <subSections>
                     <ObjectPageSubSection
-                        title="Customize Your Entities Properties"
+                        title="{i18n>section1}"
                     >
                         <blocks>
                             <m:VBox>
@@ -194,7 +194,7 @@
                 </subSections>
             </ObjectPageSection>
             <ObjectPageSection
-                title="Properties"
+                title="{i18n>section2}"
                 showTitle="false"
             >
                 <subSections>
@@ -218,7 +218,7 @@
                                         <m:OverflowToolbar>
                                             <m:content>
                                                 <m:Title
-                                                    text="Entities Properties"
+                                                    text="{i18n>section22}"
                                                     level="H2"
                                                 />
                                                 <m:ToolbarSpacer />
@@ -250,46 +250,55 @@
                                                 </m:Button>
                                             </m:content>
                                             <m:dependents>
-                                                <m:Dialog
+                                   <m:Dialog 
                                                     id="OpenDialog2"
-                                                    title="Update your field"
+                                                    title="Update Your Field"
+                                                    stretch="false"
                                                 >
-                                                    <m:buttons>
-                                                        <m:Button
-                                                            id="confirmCreate2"
-                                                            text="Create"
-                                                            press=".onUpdate"
-                                                            type="Emphasized"
+                                                    <m:VBox
+                                                        class="sapUiContentPadding sapUiSmallMargin"
+                                                    >
+                                                        <m:Label
+                                                            text="Is Key"
                                                         />
-                                                        <m:Button
-                                                            id="cancelCreate2"
-                                                            text="Cancel"
-                                                            press="onCancelDialog"
-                                                            type="Transparent"
-                                                        />
-                                                    </m:buttons>
-                                                    <m:VBox>
-                                                        <m:Label text="IsKey" />
-                                                        <m:Input id="iskey" />
-                                                        <m:Label text="Value" />
-                                                        <m:Input id="value" />
-                                                        <m:ComboBox
-                                                            placeholder="Type"
+                                                        <m:Input
+                                                            id="iskey"
+                                                            placeholder="Enter key"
+                                                            valueLiveUpdate="true"
+                                                            required="true"
                                                             class="sapUiSmallMarginBottom"
+                                                        />
+                                                        <m:Label text="Value" />
+                                                        <m:Input
+                                                            id="value"
+                                                            placeholder="Enter value"
+                                                            valueLiveUpdate="true"
+                                                            required="true"
+                                                            class="sapUiSmallMarginBottom"
+                                                        />
+                                                        <m:Label text="Type" />
+                                                        <m:ComboBox
                                                             id="idComboBoxupdate"
+                                                            placeholder="Select Type"
+                                                            class="sapUiSmallMarginBottom"
                                                             items="{ path: 'actions>/Actions' }"
                                                             width="100%"
+                                                            required="true"
                                                         >
                                                             <core:ListItem
                                                                 key="{actions>type}"
                                                                 text="{actions>type}"
                                                             />
                                                         </m:ComboBox>
+                                                        <m:Label
+                                                            text="Annotations"
+                                                        />
                                                         <m:MultiComboBox
-                                                            placeholder="Annotations"
-                                                            class="sapUiSmallMarginBottom"
                                                             id="annotationsupdate"
+                                                            placeholder="Select Annotations"
+                                                            class="sapUiSmallMarginBottom"
                                                             items="{ path: 'annotations>/Annotations' }"
+                                                            width="100%"
                                                         >
                                                             <core:ListItem
                                                                 key="{annotations>name}"
@@ -297,6 +306,20 @@
                                                             />
                                                         </m:MultiComboBox>
                                                     </m:VBox>
+                                                    <m:buttons>
+                                                        <m:Button
+                                                            id="confirmCreate2"
+                                                            text="Create"
+                                                            press=".onUpdate"
+                                                            type="Accept"
+                                                        />
+                                                        <m:Button
+                                                            id="cancelCreate2"
+                                                            text="Cancel"
+                                                            press="onCancelDialog"
+                                                            type="Reject"
+                                                        />
+                                                    </m:buttons>
                                                 </m:Dialog>
                                             </m:dependents>
                                         </m:OverflowToolbar>
@@ -357,13 +380,13 @@
                 </subSections>
             </ObjectPageSection>
             <ObjectPageSection
-                title="Association"
+             title="{i18n>Section3}"
                 showTitle="false"
             >
                 <subSections>
                     <ObjectPageSubSection>
                         <m:VBox>
-                            <m:Label text="Association " />
+                            <m:Label text="{i18n>Section33}" />
                             <m:Input
                                 id="sourceInput"
                                 textFormatMode="KeyValue"
@@ -426,7 +449,7 @@
                                                 level="H2"
                                             />
                                             <m:ToolbarSpacer />
-                                            <m:Button
+                                           <!--  <m:Button
                                                 icon="sap-icon://edit"
                                                 tooltip="Edit"
                                                 visible="true"
@@ -437,37 +460,22 @@
                                                         priority="NeverOverflow"
                                                     />
                                                 </m:layoutData>
-                                            </m:Button>
-                                            <m:Button
-                                                icon="sap-icon://delete"
-                                                tooltip="Delete"
-                                                visible="true"
-                                                press=".onDeleteAssociation"
-                                            >
-                                                <m:layoutData>
-                                                    <m:OverflowToolbarLayoutData
-                                                        priority="NeverOverflow"
-                                                    />
-                                                </m:layoutData>
-                                            </m:Button>
+                                </m:Button> -->
+                                <!-- <m:Button
+                                    icon="sap-icon://delete"
+                                    tooltip="Delete"
+                                    visible="true"
+                                    press=".onDeleteAssociation"
+                                >
+                                    <m:layoutData>
+                                        <m:OverflowToolbarLayoutData
+                                            priority="NeverOverflow"
+                                        />
+                                    </m:layoutData>
+                                </m:Button> -->
                                         </m:content>
                                         <m:dependents>
-                                            <m:Dialog
-                                                title="Create Sales Order"
-                                            >
-                                                <m:buttons>
-                                                    <m:Button
-                                                        text="Create"
-                                                        press=".onUpdate"
-                                                        type="Emphasized"
-                                                    />
-                                                    <m:Button
-                                                        text="Cancel"
-                                                        press="onCancelDialog"
-                                                        type="Transparent"
-                                                    />
-                                                </m:buttons>
-                                            </m:Dialog>
+                                           
                                         </m:dependents>
                                     </m:OverflowToolbar>
                                 </m:headerToolbar>
@@ -508,24 +516,19 @@
                                 type="Transparent"
                                 icon="sap-icon://clinical-order"
                             />
+                               <m:Button
+                                id="srv"
+                                text="{i18n>navigateService}"
+                                press="onSupplierPress"
+                                width="100%"
+                                type="Transparent"
+                                icon="sap-icon://clinical-order"
+                            />
                         </m:VBox>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
         </sections>
 
-        <footer>
-            <m:OverflowToolbar>
-                <m:ToolbarSpacer />
-                <m:Button
-                    type="Accept"
-                    text="Save"
-                />
-                <m:Button
-                    type="Reject"
-                    text="Cancel"
-                />
-            </m:OverflowToolbar>
-        </footer>
     </ObjectPageLayout>
 </mvc:View>

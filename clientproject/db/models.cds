@@ -4,6 +4,7 @@ entity Order {
 	key ID :UUID;
 	test5: String @mandatory;
 	fld_Order: Association to Customer;
+	client : Association to Client;
 }
 entity Customer {
 	key ID :UUID;
@@ -27,10 +28,14 @@ entity ProductToClient {
 entity Client {
 	key ID :UUID;
 	test4: String @readonly;
+	name: String @readonly @mandatory;
 	products : Composition of many ProductToClient on products.client=$self;
 	clientCustomer : Association to Customer;
+	fld_Client: Association to test1;
+	clientOrder : Association to Order;
 }
-entity tak {
+entity test1 {
 	key ID :UUID;
+	client : Association to many Client	on client.fld_Client = $self;
 }
 

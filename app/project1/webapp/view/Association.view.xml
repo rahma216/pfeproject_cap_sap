@@ -25,7 +25,7 @@
         <HBox renderType="Bare">
             <List
                 id="list1"
-                headerText="Entities"
+                headerText="{i18n>name}"
                 class="sapUiSmallMargin"
                 width="200px"
                 items="{path: '/' }">

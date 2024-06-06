@@ -172,62 +172,90 @@ sap.ui.define([
             },
             onDelete: function () {
                 var oSelected = this.byId("table0").getSelectedItem();
-            
+           
                 if (oSelected) {
                     var oContext = oSelected.getBindingContext("mainModel");
                     var oSalesOrder = oContext.getObject().soNumber;
                     console.log("Binding Context:", oContext);
-            
+           
                     var sPath = oContext.getPath();
-            
+           
                     // Extract the ID from the path using a regular expression
                     var aMatches = sPath.match(/\/Entity\('(\d+)'\)/);
                     if (aMatches && aMatches[1]) {
                         var sID = aMatches[1];
                         console.log("Selected Item ID:", sID);
-            
-                        oContext.delete("$auto").then(function () {
-                            var oModel = this.getView().getModel("mainModel");
-                            var sUrl1 = oModel.sServiceUrl + "/Field";
-            
-                            // Fetch data
-                            fetch(sUrl1)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    data.value.forEach(item => {
-                                        if (item.fld_ID === sID) {
-                                            console.log("Matching Data:", item.ID);
-                                            
-                                            let oBindList = oModel.bindList("/Field");
-                                            let aFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, item.ID);
-                                    
-                                            oBindList.filter(aFilter).requestContexts().then(function (aContexts) {
-                                                if (aContexts.length > 0) {
-                                                    aContexts[0].delete();
-                                                    console.log("Deleted Item ID:", item.ID);
-                                                } else {
-                                                    console.log("No matching context found for ID:", item.ID);
+           
+                        // Open confirmation dialog
+                        var oDialog = new sap.m.Dialog({
+                            title: "Confirm",
+                            type: "Message",
+                            content: new sap.m.Text({ text: "Do you really want to delete the selected entity? " + oSalesOrder + "?" }),
+                            beginButton: new sap.m.Button({
+                                text: "Delete",
+                                type: sap.m.ButtonType.Accept,
+                                press: function () {
+                                    oContext.delete("$auto").then(function () {
+                                        var oModel = this.getView().getModel("mainModel");
+                                        var sUrl1 = oModel.sServiceUrl + "/Field";
+           
+                                        // Fetch data
+                                        fetch(sUrl1)
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error('Network response was not ok');
                                                 }
-                                            }).catch(error => {
-                                                console.error("Error deleting item:", error);
+                                                return response.json();
+                                            })
+                                            .then(data => {
+                                                data.value.forEach(item => {
+                                                    if (item.fld_ID === sID) {
+                                                        console.log("Matching Data:", item.ID);
+           
+                                                        let oBindList = oModel.bindList("/Field");
+                                                        let aFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, item.ID);
+           
+                                                        oBindList.filter(aFilter).requestContexts().then(function (aContexts) {
+                                                            if (aContexts.length > 0) {
+                                                                aContexts[0].delete();
+                                                                this.getOwnerComponent().getEventBus().publish("servicechannel", "initdata");
+                                                                console.log("Deleted Item ID:", item.ID);
+                                                            } else {
+                                                                console.log("No matching context found for ID:", item.ID);
+                                                            }
+                                                        }).catch(error => {
+                                                            console.error("Error deleting item:", error);
+                                                        });
+                                                    }
+                                                });
+           
+                                            })
+                                            .catch(error => {
+                                                console.error("Error retrieving associations:", error);
                                             });
-                                        }
+           
+                                        MessageToast.show("Entity Successfully Deleted");
+                                    }.bind(this)).catch(function (oError) {
+                                        MessageToast.show("Deletion Error: " + oError.message);
                                     });
-                                    
-                                })
-                                .catch(error => {
-                                    console.error("Error retrieving associations:", error);
-                                });
-            
-                            MessageToast.show(oSalesOrder + " Successfully Deleted");
-                        }.bind(this)).catch(function (oError) {
-                            MessageToast.show("Deletion Error: " + oError.message);
+                                    oDialog.close();
+                                }.bind(this)
+                            }),
+                            endButton: new sap.m.Button({
+                                text: "Cancel",
+                                type: sap.m.ButtonType.Reject,
+ 
+                                press: function () {
+                                    oDialog.close();
+                                }
+                            }),
+                            afterClose: function () {
+                                oDialog.destroy();
+                            }
                         });
+           
+                        this.getView().addDependent(oDialog);
+                        oDialog.open();
                     } else {
                         MessageToast.show("Could not extract ID from the selected item.");
                     }
@@ -235,7 +263,6 @@ sap.ui.define([
                     MessageToast.show("Please Select a Row to Delete");
                 }
             },
-            
             onFetchAssociations: function() { 
              
                 var oModel = this.getView().getModel("mainModel");

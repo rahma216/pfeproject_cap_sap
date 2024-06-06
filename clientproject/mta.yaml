@@ -55,6 +55,22 @@ modules:
       - tak.zip
       name: tak
       target-path: resources/
+    - artifacts:
+      - test.zip
+      name: test
+      target-path: resources/
+    - artifacts:
+      - projetprojet.zip
+      name: projetprojet
+      target-path: resources/
+    - artifacts:
+      - projet1projet1.zip
+      name: projet1projet1
+      target-path: resources/
+    - artifacts:
+      - projet2projet2.zip
+      name: projet2projet2
+      target-path: resources/
 - name: vdgtboui
   type: html5
   path: app/oui
@@ -88,6 +104,46 @@ modules:
 - name: tak
   type: html5
   path: app/tak
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: test
+  type: html5
+  path: app/test
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: projetprojet
+  type: html5
+  path: app/projet
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: projet1projet1
+  type: html5
+  path: app/projet1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: projet2projet2
+  type: html5
+  path: app/projet2
   build-parameters:
     build-result: dist
     builder: custom

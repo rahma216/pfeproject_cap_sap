@@ -55,36 +55,53 @@ module.exports = cds.service.impl((srv) => {
     }); */
 
    
- 
+    const clearFile = async (filePath) => {
+      try {
+        await fs.promises.writeFile(filePath, '', { flag: 'w' }); // Open file with 'w' to clear it
+        console.log('File cleared successfully.');
+      } catch (error) {
+        console.error('Error clearing file:', error);
+        throw error;
+      }
+    };
+    
+    // Service to append text to file
     srv.on('appendTextToFile', async (req) => {
-        const { content } = req.data; // Correctly capture the 'content' from the request data
-        const filePath = '/home/user/projects/pfe_rahma/clientproject/db/models.cds'; // Ensure this path is correct
+      const { content } = req.data; // Correctly capture the 'content' from the request data
+      const filePath = '/home/user/projects/pfe_rahma/clientproject/db/models.cds'; // Ensure this path is correct
     
-        try {
-          // Append content to the file
-          await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
-          console.log('Data written to file successfully.');
-          return { success: true };
-        } catch (error) {
-          console.error('Error appending to file:', error);
-          return { success: false, error: error.message };
-        }
-      });
+      try {
+        // Clear the file before appending
+        await clearFile(filePath);
+        
+        // Append content to the file
+        await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
+        console.log('Data written to file successfully.');
+        return { success: true };
+      } catch (error) {
+        console.error('Error appending to file:', error);
+        return { success: false, error: error.message };
+      }
+    });
     
-      srv.on('appendServiceToFile', async (req) => {
-        const { content } = req.data; // Correctly capture the 'content' from the request data
-        const filePath = '/home/user/projects/pfe_rahma/clientproject/srv/services.cds'; // Ensure this path is correct
-    
-        try {
-          // Append content to the file
-          await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
-          console.log('Data written to file successfully.');
-          return { success: true };
-        } catch (error) {
-          console.error('Error appending to file:', error);
-          return { success: false, error: error.message };
-        }
-      });
+     // Service to append text to services.cds file
+srv.on('appendServiceToFile', async (req) => {
+  const { content } = req.data;
+  const filePath = '/home/user/projects/pfe_rahma/clientproject/srv/services.cds';
+
+  try {
+    // Clear the file before appending
+    await clearFile(filePath);
+
+    // Append content to the file
+    await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' });
+    console.log('Data written to file successfully.');
+    return { success: true };
+  } catch (error) {
+    console.error('Error appending to file:', error);
+    return { success: false, error: error.message };
+  }
+});
       // Handle the ExecuteCommand event
       srv.on('ExecuteCommand', async (req) => {
         const { command } = req.data;

@@ -45,8 +45,9 @@ sap.ui.define([
       if (!this.base || !this.base.getEditFlow) {
         console.error("Base or getEditFlow is undefined.");
       }
-      this.initData();
+      this.getOwnerComponent().getEventBus().subscribe("servicechannel","initdata",this.initData.bind(this),this);
       this.attachDragAndDrop();
+
 
     },
 
@@ -436,7 +437,7 @@ sap.ui.define([
                     annotationSyntax += `\n);`;
                     console.log(annotationSyntax);
                     this.onAppendUIToFilePress(`using modelsService as service from '../../srv/services';` + annotationSyntax);
-
+                 
 
                   }
 
