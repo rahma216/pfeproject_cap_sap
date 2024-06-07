@@ -1,11 +1,7 @@
 namespace models;
 using { cuid, managed} from '@sap/cds/common';
 
-entity Entity : cuid, managed {
-    key ID       : String;
-    name        : String;
-    fields      : Association to many Field on fields.fld = $self;
-}
+
 entity Field : cuid, managed {
     key ID       : UUID;
     value       : String;
@@ -14,9 +10,16 @@ entity Field : cuid, managed {
     annotations : String ;
     iskey       : Boolean;
 }
+entity Entity : cuid, managed {
+    key ID       : String;
+    name        : String;
+    fields      : Association to many Field on fields.fld = $self;
+    associations      : Association to many Association on associations.asn = $self;
+}
 entity Association :cuid, managed{
   entitySource : Association to Entity;
   entityTarget  : Association to Entity;
   type : String;
+  asn : Association to Entity;
 
 }

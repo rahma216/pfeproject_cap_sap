@@ -4,18 +4,18 @@ entity Order {
 	key ID :UUID;
 	test5: String @mandatory;
 	fld_Order: Association to Customer;
-	client : Association to Client;
 }
 entity Customer {
 	key ID :UUID;
-	key test1: String @readonly;
 	test2: String @readonly;
+	key test1: String @readonly;
 	order : Association to many Order	on order.fld_Order = $self;
 	client : Association to Client;
 }
 entity Product {
 	key ID :UUID;
 	key test3: String @readonly;
+	rr : Association to many rr	on rr.fld_rr = $self;
 	clients : Composition of many ProductToClient on clients.product=$self;
 }
 entity ProductToClient {
@@ -28,14 +28,20 @@ entity ProductToClient {
 entity Client {
 	key ID :UUID;
 	test4: String @readonly;
-	name: String @readonly @mandatory;
+	rrs : Composition of many rrToClient on rrs.client=$self;
 	products : Composition of many ProductToClient on products.client=$self;
 	clientCustomer : Association to Customer;
-	fld_Client: Association to test1;
-	clientOrder : Association to Order;
 }
-entity test1 {
+entity rr {
 	key ID :UUID;
-	client : Association to many Client	on client.fld_Client = $self;
+	fld_rr: Association to Product;
+	clients : Composition of many rrToClient on clients.rr=$self;
+}
+entity rrToClient {
+              
+	key rr : Association to rr;
+              
+	key client : Association to Client;
+              
 }
 

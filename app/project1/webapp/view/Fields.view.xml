@@ -439,7 +439,7 @@
                                 id="associationsTable"
                                 mode="SingleSelectLeft"
                                 items="{associationsModel>/value}"
-                                visible="false"
+                                visible="true"
                             >
                                 <m:headerToolbar>
                                     <m:OverflowToolbar>
@@ -525,6 +525,7 @@
                                 icon="sap-icon://clinical-order"
                             />
                         </m:VBox>
+                     
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>

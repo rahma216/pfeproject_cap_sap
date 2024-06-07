@@ -19,8 +19,46 @@ sap.ui.define([
                  this.getView().setModel(oDetailModel, "detailModel");
                 */
 
+                 this.getOwnerComponent().getEventBus().subscribe("servicechannel2","onlistitempress2",this.onListItemPress2.bind(this),this);
+            },
+            onListItemPress2: function (indexl) {
+                // Suppose que vous avez besoin de faire quelque chose avec l'élément correspondant à l'index
+                console.log("Item at index " + indexl + " pressed.");
+                this.onFetchAssociations() ; 
+                // Effectuez le même traitement que précédemment avec l'index passé
+                // Par exemple, vous pouvez utiliser index pour naviguer vers "Details"
+                this.getOwnerComponent().getRouter().navTo("Details", {
+                    index: indexl
+                });
+            
+                // Vous pouvez également effectuer d'autres actions ici en fonction de l'index
+                var Model = this.getOwnerComponent().getModel("localModel");
+                Model.setProperty("/layout", "TwoColumnsMidExpanded");
+            },
+            onListItemPress: function (oEvent) {
+                var oItem = oEvent.getSource();
+                var oSelectedContext = oItem.getBindingContext("mainModel");
+                var selectedObj = oSelectedContext.getObject();
+              
+                this.onFetchAssociations() ; 
+                console.log("naaah")
+                
+
+                
+                this.getOwnerComponent().getRouter().navTo("Details", {
+                    index: selectedObj.ID
+                });
+                var Model = this.getOwnerComponent().getModel("localModel");
+                Model.setProperty("/layout", "TwoColumnsMidExpanded");
+
+
+
+
+
 
             },
+
+            
             _validateInputs: function(aInputs) {
 
                 var oModel = this.getView().getModel("mainModel");
@@ -371,27 +409,7 @@ sap.ui.define([
                     
             },
             
-            onListItemPress: function (oEvent) {
-                var oItem = oEvent.getSource();
-                var oSelectedContext = oItem.getBindingContext("mainModel");
-                var selectedObj = oSelectedContext.getObject();
-              
-                this.onFetchAssociations() ; 
-                
-
-                
-                this.getOwnerComponent().getRouter().navTo("Details", {
-                    index: selectedObj.ID
-                });
-                var Model = this.getOwnerComponent().getModel("localModel");
-                Model.setProperty("/layout", "TwoColumnsMidExpanded");
-
-
-
-
-
-
-            },
+            
 
             filterEntityById: function (id) {
                 let oModel = this.getView().getModel();

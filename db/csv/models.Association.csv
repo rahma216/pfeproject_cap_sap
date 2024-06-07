@@ -1,4 +1,4 @@
-ID,entitySource_ID,entityTarget_ID,type
-1,1,2,ManyToOne
-2,3,4,ManyToMany
-3,4,2,OneToOne
+ID,entitySource_ID,entityTarget_ID,type,asn_ID
+1,1,2,ManyToOne,1
+2,3,4,ManyToMany,1
+3,4,2,OneToOne,1

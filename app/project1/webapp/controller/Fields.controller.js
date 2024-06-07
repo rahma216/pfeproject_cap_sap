@@ -17,6 +17,7 @@ sap.ui.define(
       return BaseController.extend("app.project1.controller.Fields", {
           onInit: function () {
            var ID=""
+           var ID2=""
               var actions = {
                   "Actions": [
                       { key: 0, type: "String" },
@@ -75,6 +76,7 @@ sap.ui.define(
           ,
           _onFieldsMatched: function (oEvent) {
             this.index = oEvent.getParameter("arguments").index || "0";
+            this.ID2=this.index;
            
 
 
@@ -157,9 +159,11 @@ this.getView().bindElement({
           onFilterAssociations: function(ID) {
               
               var oTable = this.getView().byId("associationsTable");
+              this._updateAssociationsModel();
               var oBinding = oTable.getBinding("items");
           
               if (ID) {
+                this._updateAssociationsModel();
                 //soit entitysource soit entitytarget
                   var oFilterSource = new sap.ui.model.Filter("entitySource1", sap.ui.model.FilterOperator.EQ, ID);
                   var oFilterTarget = new sap.ui.model.Filter("entityTarget1", sap.ui.model.FilterOperator.EQ, ID);
@@ -167,9 +171,12 @@ this.getView().bindElement({
                       filters: [oFilterSource, oFilterTarget],
                       and: false
                   });
+                  this._updateAssociationsModel();
           
                   oBinding.filter(oCombinedFilter);
+                  this._updateAssociationsModel();
               } else {
+                this._updateAssociationsModel();
                   // Si aucun ID n'est fourni, enlever les filtres pour afficher toutes les associations
                   oBinding.filter([]);
               }
@@ -578,111 +585,121 @@ onOpenAddDialog2: function () {
               Model.setProperty("/layout", "OneColumn");
               this.getOwnerComponent().getRouter().navTo("Listview");
           },
-         onCreate: function () {
-              var oModel = this.getView().getModel("mainModel");
-              var input1 = this.getView().byId("sourceInput").getValue();
-              var input2 = this.getView().byId("targetInput").getValue();
-              var type = this.getView().byId("associationtype").getValue();
-              var sUrl1 = oModel.sServiceUrl + "/Entity";
-              var sUrl2 = oModel.sServiceUrl + "/Association";
+          onCreate: function () {
+            var oModel = this.getView().getModel("mainModel");
+            var input1 = this.getView().byId("sourceInput").getValue();
+            var input2 = this.getView().byId("targetInput").getValue();
+            var type = this.getView().byId("associationtype").getValue();
+            var sUrl1 = oModel.sServiceUrl + "/Entity";
+            var sUrl2 = oModel.sServiceUrl + "/Association";
+        
+            var entity1 = {};
+            var entity2 = {};
+            if (oModel) {
+                fetch(sUrl1)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(entityData => {
+                        const entities = entityData.value;
+                        entities.forEach(element => {
+                            if (element.name == input1) {
+                                entity1 = element;
+                            }
+                            if (element.name == input2) {
+                                entity2 = element;
+                            }
+                        });
+        
+                        if (entity1 === entity2) {
+                            var oView = this.getView();
+                            var aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
+                            aInputs.forEach(oInput => oInput.setValue(""));
+                            this.showSameEntityConfirmationPopup();
+                        } else {
+                            fetch(sUrl2)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    const associations = data.value;
+                                    let associationExists = false;
+                                    associations.forEach(element => {
+                                        if ((element.entitySource_ID === entity1.ID && element.entityTarget_ID === entity2.ID) ||
+                                            (element.entityTarget_ID === entity1.ID && element.entitySource_ID === entity2.ID)) {
+                                            associationExists = true;
+                                        }
+                                    });
+        
+                                    if (associationExists) {
+                                        var oView = this.getView();
+                                        var aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
+                                        aInputs.forEach(oInput => oInput.setValue(""));
+                                    } else {
+                                        var oBindList = oModel.bindList("/Association");
+                                        oBindList.create({
+                                            entitySource: entity1,
+                                            entityTarget: entity2,
+                                            type: type
+                                        }).created().then(() => {
+                                            // Fetch new associations and update the model
+                                            this._updateAssociationsModel();
+                                            this.onFilterAssociations(this.ID); 
+                                            this.getOwnerComponent().getEventBus().publish("servicechannel2", "onlistitempress2", this.ID2);
+                                            // Mettre à jour la visibilité du tableau
+    var oTable = this.getView().byId("associationsTable");
+    oTable.setVisible(true);
 
-              var entity1 = {};
-              var entity2 = {};
-              if (oModel) {
-                  fetch(sUrl1)
-                      .then(response => {
-                          if (!response.ok) {
-                              throw new Error('Network response was not ok');
-                          }
-                          return response.json();
-                      })
-                      .then(entityData => {
-                          const entities = entityData.value;
-                          entities.forEach(element => {
-                              if (element.name == input1) {
-                                  entity1 = element;
-                              }
-                              if (element.name == input2) {
-                                  entity2 = element;
-                              }
-
-                          });
-                         
-                          // Vérifier si les entités source et cible sont identiques
-                          if (entity1 === entity2) {
-                              var oView = this.getView(),
-
-                              aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
-                                          aInputs.forEach((oInput) => { 
-                                              oInput.setValue("")
-                                          });
-                              this.showSameEntityConfirmationPopup();
-                              
-                          } else {
-                              fetch(sUrl2)  // Ensure sUrl2 is correctly formatted to access the Association entity set
-                                  .then(response => {
-                                      if (!response.ok) {
-                                          throw new Error('Network response was not ok');
-                                      }
-                                      return response.json();
-                                  })
-                                  .then(data => {
-                                      const associations = data.value; // Ensure the response structure matches this path
-                                      let associationExists = false;
-
-
-                                      // Check through all associations to see if there is a match with both entity1 and entity2
-                                      associations.forEach(element => {
-                                          console.log(element)
-                                       
-
-                                          if ((element.entitySource_ID === entity1.ID && element.entityTarget_ID === entity2.ID) ||
-                                          (element.entityTarget_ID === entity1 && element.entitySource_ID === entity2)) {
-                                          associationExists = true;
-                                      }
-                                         
-         
-                                      });
-
-                                      if (associationExists) {
-                                          console.log("Association already exists between the entities.");
-                                          aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
-                                          aInputs.forEach((oInput) => { 
-                                              oInput.setValue("")
-                                          });
-                                      } else {
-                                          console.log("No existing association found. Ready to create a new one.");
-                                          var oBindList = oModel.bindList("/Association");
-                                          oBindList.create({
-                                              entitySource: entity1,
-                                              entityTarget: entity2,
-                                              type: type
-                                          });
-                                          
-                                          var oView = this.getView(),
-
-                                          aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
-                                          aInputs.forEach((oInput) => { 
-                                              oInput.setValue("")
-                                          });
-
-                                      }
-                                  })
-                                  .catch(error => {
-                                      console.error(error);
-                                  });
-
-
-
-                          }
-                      })
-                      .catch(error => {
-                          console.error("Error retrieving entities:", error);
-                      });
-              } else {
-                  console.error("Model 'mainModel' is not defined or accessible in the view.");
-              }
-          },
+                                        });
+                                        var oView = this.getView();
+                                        var aInputs = [oView.byId("targetInput"), oView.byId("associationtype")];
+                                        aInputs.forEach(oInput => oInput.setValue(""));
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error retrieving entities:", error);
+                    });
+            } else {
+                console.error("Model 'mainModel' is not defined or accessible in the view.");
+            }
+        },
+        
+        // Helper function to update the associations model
+        _updateAssociationsModel: function() {
+          var oModel = this.getView().getModel("associationsModel");
+          if (!oModel) {
+              console.error("Model 'associationsModel' is not defined or accessible in the view.");
+              return;
+          }
+      
+          var data = oModel.getProperty("/value");
+          if (!data) {
+              console.error("No data found in 'associationsModel'.");
+              return;
+          }
+      
+          // Assuming the data is being persisted or fetched from a backend, 
+          // you can handle this as per your application's requirements.
+          // Here, we will log the data to confirm it's being updated.
+          console.log("Associations data:", data);
+      
+          // Refresh the table to reflect the updated data
+          var oTable = this.getView().byId("associationsTable");
+          oTable.getBinding("items").refresh();
+      }
+      
+,        
           onSuggestionItemSelected: function (oEvent) {
               var oItem = oEvent.getParameter("selectedItem");
               var oText = oItem ? oItem.getKey() : "";
