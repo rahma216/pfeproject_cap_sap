@@ -543,7 +543,84 @@ oBindList.filter(filter).requestContexts().then(function (aContexts) {
           
           
           
-,            
+,   
+deleteAssociation: function () {
+  var oSelected = this.byId("associationsTable").getSelectedItem();
+
+  if (oSelected) {
+      var oContext = oSelected.getBindingContext("associationsModel");
+      if (oContext) {
+          // Accéder aux données du contexte
+          var oData = oContext.getObject();
+          console.log("Data from context:", oData);
+
+          // Récupérer l'ID directement du contexte
+          var sID = oData.ID;
+          console.log("Selected Item ID:", sID);
+
+          var oModel = this.getView().getModel("mainModel");
+          var oModel2 = this.getView().getModel("associationsModel");
+          let oBindList = oModel.bindList("/Association");
+          let aFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, sID);
+
+          /////////////////////
+        /*   let oBindList2 = oModel2.bindList("/value");
+          console.log("mmmmmmmmmmmmmmm",oBindList2)
+  
+          oBindList2.filter(aFilter).requestContexts().then(function (aContexts) {
+            if (aContexts.length > 0) {
+                aContexts[0].delete().then(() => {
+                    // Vérifier si le composant propriétaire est disponible
+                    var oOwnerComponent = this.getOwnerComponent();
+                    if (oOwnerComponent) {
+                        // Publish the event after deletion
+                        oOwnerComponent.getEventBus().publish("servicechannel2", "onlistitempress2", { index: this.ID2 });
+                    } else {
+                        console.error("Owner component is not available.");
+                    }
+                }).catch((error) => {
+                    console.error("Error deleting item:", error);
+                });
+            } else {
+                console.log("No matching context found for ID:", sID);
+            }
+        }).catch((error) => {
+            console.error("Error requesting contexts:", error);
+        });
+         */
+
+          ////////////////////////
+
+          oBindList.filter(aFilter).requestContexts().then(function (aContexts) {
+            if (aContexts.length > 0) {
+              aContexts[0].delete().then(() => {
+                  // Vérifier si le composant propriétaire est disponible
+                  var oOwnerComponent = this.getOwnerComponent();
+                  if (oOwnerComponent) {
+                      // Publish the event after deletion
+                      oOwnerComponent.getEventBus().publish("servicechannel2", "onlistitempress2", { index: this.ID2 });
+                  } else {
+                      console.error("Owner component is not available.");
+                  }
+              }).catch((error) => {
+                  console.error("Error deleting item:", error);
+              });
+          } else {
+              console.log("No matching context found for ID:", sID);
+          }
+          
+          }.bind(this)).catch((error) => {
+              console.error("Error requesting contexts:", error);
+          });
+      } else {
+          console.error("No binding context found for the selected item.");
+      }
+  } else {
+      console.error("No item selected.");
+  }
+}
+,
+
 onOpenAddDialog2: function () {
   var oSelected = this.getView().byId("table1").getSelectedItem();
  
@@ -651,10 +728,14 @@ onOpenAddDialog2: function () {
                                             // Fetch new associations and update the model
                                             this._updateAssociationsModel();
                                             this.onFilterAssociations(this.ID); 
-                                            this.getOwnerComponent().getEventBus().publish("servicechannel2", "onlistitempress2", this.ID2);
+                                          
+                                           // this.getOwnerComponent().getEventBus().publish("servicechannel2", "onlistitempress2(this.ID2)", this.ID2);
+                                           var oEventBus = this.getOwnerComponent().getEventBus();
+                                           oEventBus.publish("servicechannel2", "onlistitempress2", { index: this.ID2 });
                                             // Mettre à jour la visibilité du tableau
     var oTable = this.getView().byId("associationsTable");
     oTable.setVisible(true);
+
 
                                         });
                                         var oView = this.getView();

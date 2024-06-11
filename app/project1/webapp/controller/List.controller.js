@@ -19,19 +19,20 @@ sap.ui.define([
                  this.getView().setModel(oDetailModel, "detailModel");
                 */
 
-                 this.getOwnerComponent().getEventBus().subscribe("servicechannel2","onlistitempress2",this.onListItemPress2.bind(this),this);
+                // this.getOwnerComponent().getEventBus().subscribe("servicechannel2","onlistitempress2",this.onListItemPress2.bind(this),this);
+                this.getOwnerComponent().getEventBus().subscribe("servicechannel2", "onlistitempress2", this.onListItemPress2.bind(this), this);
             },
-            onListItemPress2: function (indexl) {
-                // Suppose que vous avez besoin de faire quelque chose avec l'élément correspondant à l'index
+            onListItemPress2: function (channel, event, data) {
+                var indexl = data.index; // Récupérez le paramètre 'index' à partir des données de l'événement
                 console.log("Item at index " + indexl + " pressed.");
-                this.onFetchAssociations() ; 
-                // Effectuez le même traitement que précédemment avec l'index passé
-                // Par exemple, vous pouvez utiliser index pour naviguer vers "Details"
+                this.onFetchAssociations();
+    
+                // Navigation vers "Details" avec l'index passé
                 this.getOwnerComponent().getRouter().navTo("Details", {
                     index: indexl
                 });
-            
-                // Vous pouvez également effectuer d'autres actions ici en fonction de l'index
+    
+                // Autres actions basées sur l'index
                 var Model = this.getOwnerComponent().getModel("localModel");
                 Model.setProperty("/layout", "TwoColumnsMidExpanded");
             },
@@ -308,6 +309,7 @@ sap.ui.define([
                 let tabS=[];
                 let tabT=[];
                 let typ=[];
+                let tabid=[];
                 var sUrl2 = oModel.sServiceUrl + "/Entity";
                 fetch(sUrl)
                     .then(response => {
@@ -322,6 +324,7 @@ sap.ui.define([
                         /////////////////////////////
                         var associations=data.value;
                         associations.forEach(element => {
+                            tabid.push(element.ID)
                      
                             tabS.push(element.entitySource_ID);
                             tabT.push(element.entityTarget_ID);
@@ -359,9 +362,11 @@ sap.ui.define([
                                 });
 
                             }
+                   
                             console.log(tabS)
                             console.log(tabT)
                             var combinedData = tabS.map((sItem, index) => ({
+                                ID: tabid[index],  
                                 entitySource1: sItem,
                                 entityTarget1: tabT[index],
                                 type: typ[index]

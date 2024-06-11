@@ -430,10 +430,7 @@
                                     icon="sap-icon://collaborate"
                                 />
                             </m:HBox>
-                            <m:Button
-                                text="Show Associations"
-                                press="onFetchAssociations"
-                            />
+                      
 
                             <m:Table
                                 id="associationsTable"
@@ -461,18 +458,19 @@
                                                     />
                                                 </m:layoutData>
                                 </m:Button> -->
-                                <!-- <m:Button
+                                 <m:Button
                                     icon="sap-icon://delete"
                                     tooltip="Delete"
                                     visible="true"
-                                    press=".onDeleteAssociation"
+                                    press=".deleteAssociation"
                                 >
                                     <m:layoutData>
                                         <m:OverflowToolbarLayoutData
                                             priority="NeverOverflow"
                                         />
                                     </m:layoutData>
-                                </m:Button> -->
+                                </m:Button> 
+                                
                                         </m:content>
                                         <m:dependents>
                                            

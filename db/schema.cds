@@ -17,6 +17,7 @@ entity Entity : cuid, managed {
     associations      : Association to many Association on associations.asn = $self;
 }
 entity Association :cuid, managed{
+      key ID       : UUID;
   entitySource : Association to Entity;
   entityTarget  : Association to Entity;
   type : String;
