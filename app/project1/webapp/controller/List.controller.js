@@ -69,75 +69,51 @@ sap.ui.define([
            
 
                 aInputs.forEach((oInput) => {
-
                     var sField = oInput.getId().includes("ID") ? "ID" : "name";
-
                     var sValue = oInput.getValue();
-
-           
-
                     var oPromise = new Promise((resolve, reject) => {
-
                         // Check if the input value is empty
-
                         if (!sValue) {
-
                             oInput.setValueState("Error");
-
-                            oInput.setValueStateText("Ce champ est obligatoire et ne peut pas être vide.");
-
+                            oInput.setValueStateText("This field is required and cannot be empty.");
                             resolve(true); // True indicates a validation error
-
                             return; // Exit early to avoid unnecessary OData call
-
                         }
-
-           
-
-                        var oListBinding = oModel.bindList("/Entity", undefined, undefined, [
-
-                            new sap.ui.model.Filter(sField, sap.ui.model.FilterOperator.EQ, sValue)
-
-                        ])
-           
-
-                        oListBinding.requestContexts().then(function(aContexts) {
-
-                            if (aContexts && aContexts.length > 0) {
-
-                                oInput.setValueState("Error");
-
-                                oInput.setValueStateText("La valeur '" + sValue + "' pour '" + sField + "' existe déjà.");
-
-                                resolve(true); // True indicates a validation error
-
-                            } else {
-
-                                oInput.setValueState("None");
-
-                                resolve(false); // False indicates no validation error
-
-                            }
-
-                        }).catch(function(oError) {
-
+                
+                        // Check if the value contains punctuation
+                        var punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/;
+                        if (punctuationRegex.test(sValue)) {
                             oInput.setValueState("Error");
-
-                            oInput.setValueStateText("Erreur lors de la vérification de la valeur.");
-
+                            oInput.setValueStateText("The name must not contain punctuation marks.");
+                            resolve(true); // True indicates a validation error
+                            return; // Exit early to avoid unnecessary OData call
+                        }
+                
+                        var oListBinding = oModel.bindList("/Entity", undefined, undefined, [
+                            new sap.ui.model.Filter(sField, sap.ui.model.FilterOperator.EQ, sValue)
+                        ]);
+                
+                        oListBinding.requestContexts().then(function(aContexts) {
+                            if (aContexts && aContexts.length > 0) {
+                                oInput.setValueState("Error");
+                                oInput.setValueStateText("The value '" + sValue + "' for '" + sField + "' already exists.");
+                                resolve(true); // True indicates a validation error
+                            } else {
+                                oInput.setValueState("None");
+                                resolve(false); // False indicates no validation error
+                            }
+                        }).catch(function(oError) {
+                            oInput.setValueState("Error");
+                            oInput.setValueStateText("Error checking the value.");
                             resolve(true); // Treat fetching errors as validation errors
-
                         });
-
                     });
-
+                
                     aPromises.push(oPromise);
-
                 });
-
-           
-
+                
                 return Promise.all(aPromises);
+                
 
             },
 
@@ -172,6 +148,7 @@ sap.ui.define([
                             oBinding.create({
                                 "ID": newID,
                                 "name": this.byId("EntityNamee").getValue(),
+                                "annotations": " ",
                             });
            
                             // Reset input fields after creation
@@ -401,7 +378,7 @@ sap.ui.define([
 
                         
                         var associationModel = this.getOwnerComponent().getModel("associationModel");
-                        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu2",associationModel.getData());
+                   
 
 
                     })

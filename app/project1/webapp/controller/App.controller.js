@@ -7,6 +7,7 @@ sap.ui.define(
   
       return BaseController.extend("app.project1.controller.App", {
         onInit: function() {
+          
         }
       });
     }

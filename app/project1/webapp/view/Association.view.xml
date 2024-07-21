@@ -1,16 +1,22 @@
 <mvc:View
     controllerName="app.project1.controller.Association"
     xmlns="sap.m"
- 
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
     xmlns:card="sap.f.cards"
     xmlns:w="sap.ui.integration.widgets"
+    xmlns:m="sap.m"
+     xmlns:columnmenu="sap.m.table.columnmenu"
+        xmlns:u="sap.ui.table"
+    xmlns:sap.ui.fl="sap.ui.fl"
+    xmlns:sap.ui.dt="sap.ui.dt"
+    xmlns:vm="sap.ui.fl.variants"
+    xmlns:ui="sap.ui.unified"
+    xmlns:core="sap.ui.core"
     displayBlock="true"
-    height="100%"
-        xmlns:core="sap.ui.core">
+    >
         <Page showHeader="false" >
             <headerContent>
             <Button icon="sap-icon://write-new-document" tooltip="Share" />
@@ -23,14 +29,28 @@
                 titleLevel="H5"
             />
         <HBox renderType="Bare">
-            <List
-                id="list1"
-                headerText="{i18n>name}"
-                class="sapUiSmallMargin"
-                width="200px"
-                items="{path: '/' }">
-                    <StandardListItem title="{name}" description="{ID}" info="created" iconInset="false"  infoState="Success" icon="sap-icon://hr-approval"     infoStateInverted="true" />
-            </List>
+         <List
+            id="list1"
+            headerText="{i18n>name}"
+            class="sapUiSmallMargin"
+            width="200px"
+            items="{path: '/' }"
+              >
+            <CustomListItem>
+                 <StandardListItem title="{name}" description="{ID}" info="created" iconInset="false"  infoState="Success" icon="sap-icon://hr-approval"     infoStateInverted="true" />
+                <VBox>
+                   
+                      <Select width="100%" change="onSelectChange2">
+                         <core:Item key="" text="Select annotation" />
+                
+                        <core:Item key="@readonly" text="@readonly" />
+                        <core:Item key="@cds.persistence.skip" text="@cds.persistence.skip" />
+                        <core:Item key="@cds.persistence.exists" text="@cds.persistence.exists" />
+                        <core:Item key="@insertonly" text="@insertonly" />
+                    </Select>
+                </VBox>
+            </CustomListItem>
+        </List>
            
  
                
@@ -49,21 +69,20 @@
                 <f:layoutXS>
                     <f:GridContainerSettings rowSize="70px" columnSize="70px" gap="8px" />
                 </f:layoutXS>
- 
-                <f:Card>
-                   
-                    <f:layoutData>
-                   
-                        <f:GridContainerItemLayoutData minRows="1" columns="3" />
-                    </f:layoutData>
-                    <f:header>
-                        <card:Header title="{name}" />
-                    </f:header>
-                        <f:content>
- 
- 
-                      </f:content>
-                </f:Card>
+ <f:Card>
+    <f:layoutData>
+        <f:GridContainerItemLayoutData minRows="1" columns="3" />
+    </f:layoutData>
+    <f:header>
+         <card:Header title="{name}" />
+   
+    </f:header>
+    
+    <f:content>
+  <Text text="{annotations}" />
+    </f:content>
+</f:Card>
+
                
                      
            
@@ -75,7 +94,7 @@
         </HBox>
         <Button
                     id="aa"
-                    text="GenenrateService"
+                    text="GenerateService"
                     press="generateService"
                     type="Accept"
                     icon="sap-icon://write-new-document"
@@ -208,7 +227,11 @@
                     </VBox>
                 </f:content>
             </f:Card>
+      
         </f:GridContainer>
+       
+
+  
         </VBox>
            
            <Dialog
@@ -246,9 +269,41 @@
                                <Select id="choice1" items="{rahmaModel>/Entity}" change=".onSelectChange" required="true" selectedItem="{rahmaModel>name}">
     <core:Item key="{rahmaModel>name}" text="{rahmaModel>name}" />
 </Select>
- 
+
                             </form:content>
                         </form:SimpleForm>
+       <u:Table id="persoTable" rows="{rahmaModel2>/Field}" width="300px" rowSelectionChange=".onRowSelectionChange">
+
+        <u:columns>
+            <u:Column id="firstName_col" >
+                <m:Label text="Select Fields" />
+                <u:template>
+                    <m:Text text="{rahmaModel2>name}" />
+                </u:template>
+            </u:Column>
+        </u:columns>
+
+    </u:Table>
+
+
+                          <VBox>
+		<UploadCollection
+			id="UploadCollection"
+			maximumFilenameLength="55"
+			maximumFileSize="10"
+			multiple="true"
+			sameFilenameAllowed="true"
+			instantUpload="false"
+			noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload"
+			change="onChange"
+	fileDeleted="onFileDeleted"
+			filenameLengthExceed="onFilenameLengthExceed"
+			fileSizeExceed="onFileSizeExceed"
+			typeMissmatch="onTypeMissmatch"
+		
+			uploadComplete="onUploadComplete"
+			beforeUploadStarts="onBeforeUploadStarts" />
+   </VBox>
                     </VBox>
                 </content>
                 <footer>
@@ -399,9 +454,21 @@
                 </footer>
             </Dialog>
    
-       
- 
- 
+         
+    <Button
+                    id="aa0"
+                    text="Download your code"
+                    press="onButtonPress"
+                    type="Accept"
+                    icon="sap-icon://write-new-document"
+                    width="100%"
+                />
+
+
+
+	
+
+
     </ScrollContainer>
    
     </Page>

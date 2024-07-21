@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>rahma</title>
     <style>
-        html, body, body > div, #container, #container-uiarea {
-            height: 100%;
+        html, body, body > div, #content, #container-uiarea {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="https://ui5.sap.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
     <script
         id="sap-ui-bootstrap"
         src="https://sapui5.hana.ondemand.com/1.123.2/resources/sap-ui-core.js"
@@ -23,13 +30,15 @@
         data-sap-ui-frameOptions="trusted"
     ></script>
 </head>
-<body class="sapUiBody sapUiSizeCompact" id="content">
-    <div
+<body class="sapUiBody" id="content">
+        <div
         data-sap-ui-component
         data-name="app.project1"
         data-id="container"
         data-settings='{"id" : "app.project1"}'
         data-handle-validation="true"
     ></div>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
 </body>
 </html>

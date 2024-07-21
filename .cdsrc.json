@@ -1,1 +1,17 @@
-{}
+{
+  "[development]": {
+    "auth": {
+      "kind": "mocked",
+      "users": {
+        "admin@tester.sap.com": {
+          "password": "123",
+          "ID": "admin@tester.sap.com",
+          "roles": [
+            "AdminRole"
+          ]
+        }
+        
+      }
+    }
+  }
+}

@@ -1,5 +1,8 @@
-ID,createdAt,createdBy,modifiedAt,modifiedBy,name
-1,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Order
-2,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Customer
-3,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Product
-4,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Client
+ID,createdAt,createdBy,modifiedAt,modifiedBy,name,annotations
+1,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Order, 
+2,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Customer, 
+3,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Product, 
+4,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Client, 
+5,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Invoice, 
+6,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Payment, 
+7,2024-03-19T10:43:19.122Z,anonymous,2024-03-19T10:43:19.122Z,anonymous,Shipment, 

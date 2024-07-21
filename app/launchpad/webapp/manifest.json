@@ -1,0 +1,60 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "my.launchpad",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "My Launchpad",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.13.0",
+      "toolsId": "66d25ea2-05ea-4fab-8cf7-207245758ea3"
+    }
+  },  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.121.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ushell": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "my-service"
+  },
+  "sap.platform.abap": {
+    "uri": "/sap/opu/odata"
+  },
+  "sap.platform.hcp": {
+    "uri": "/my/hcp/service"
+  },
+  "sap.platform.cf": {
+    "uri": "/my/cf/service"
+  }
+}

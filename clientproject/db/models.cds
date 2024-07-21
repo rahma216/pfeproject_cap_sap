@@ -2,20 +2,28 @@
               using { cuid, managed} from '@sap/cds/common';
 entity Order {
 	key ID :UUID;
-	test5: String @mandatory;
+	Status: String @mandatory;
+	OrderTotal: Decimal @readonly;
+	OrderNumber: String @readonly;
+	OrderDate: DateTime @readonly;
 	fld_Order: Association to Customer;
 }
 entity Customer {
 	key ID :UUID;
-	test2: String @readonly;
-	key test1: String @readonly;
+	CustomerEmail: String @readonly;
+	CustomerName: String @readonly;
+	CustomerPhone: String @mandatory;
+	CustomerAddress: String @readonly;
 	order : Association to many Order	on order.fld_Order = $self;
 	client : Association to Client;
 }
 entity Product {
 	key ID :UUID;
-	key test3: String @readonly;
-	rr : Association to many rr	on rr.fld_rr = $self;
+	Price: Decimal @readonly;
+	ProductID: String @readonly;
+	ProductName: String @readonly;
+	Category: String @mandatory;
+	Description: String @readonly;
 	clients : Composition of many ProductToClient on clients.product=$self;
 }
 entity ProductToClient {
@@ -27,21 +35,27 @@ entity ProductToClient {
 }
 entity Client {
 	key ID :UUID;
-	test4: String @readonly;
-	rrs : Composition of many rrToClient on rrs.client=$self;
+	ClientName: String @readonly;
+	ClientPhone: String @mandatory;
+	ClientEmail: String @readonly;
+	ClientAddress: String @readonly;
 	products : Composition of many ProductToClient on products.client=$self;
 	clientCustomer : Association to Customer;
 }
-entity rr {
+entity Invoice {
 	key ID :UUID;
-	fld_rr: Association to Product;
-	clients : Composition of many rrToClient on clients.rr=$self;
+	TotalAmount: Decimal @readonly;
+	InvoiceNumber: String @readonly;
+	InvoiceDate: DateTime @readonly;
 }
-entity rrToClient {
-              
-	key rr : Association to rr;
-              
-	key client : Association to Client;
-              
+entity Payment {
+	key ID :UUID;
+	PaymentDate: DateTime @readonly;
+	AmountPaid: Decimal @readonly;
+}
+entity Shipment {
+	key ID :UUID;
+	ShipmentDate: DateTime @readonly;
+	Status: String @readonly;
 }
 

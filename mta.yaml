@@ -95,6 +95,7 @@ modules:
     - npm run build:cf
     supported-platforms: []
 resources:
+
 - name: pfe_rahma-db
   type: com.sap.xs.hdi-container
   parameters:

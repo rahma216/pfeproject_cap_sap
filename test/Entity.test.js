@@ -53,7 +53,7 @@ describe('Model Service Test Suite', () => {
   });
   it('should update an entity', async () => {
     const originalData = { ID: "4", name: "initial name" };
-    const updateData = { name: "updated name" };
+    const updateData = { name: "updated name22" };
  
     // Assuming the entity is already created, if not, you should create it as part of setup or in a separate test
    // await modelService.create('Entity').entries(originalData);
@@ -62,11 +62,11 @@ describe('Model Service Test Suite', () => {
     const updateResponse = await modelService.update('Entity').set(updateData).where({ ID: "4" });
  
     // Optionally check the response of the update operation, if it provides such data
-    expect(updateResponse).toEqual({ ID: "4", name: "updated name" });
+    expect(updateResponse).toEqual({ ID: "4", name: "updated name22" });
  
     // Fetch the updated entity to verify changes
     const updatedEntity = await modelService.read('Entity').where({ ID: "4" });
-    expect(updatedEntity[0].name).toEqual("updated name");
+    expect(updatedEntity[0].name).toEqual("updated name22");
   });
   it('should create a field with entity reference with id 700', async () => {
     // Assurez-vous que l'entité référencée existe

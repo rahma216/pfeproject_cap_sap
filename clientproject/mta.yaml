@@ -71,6 +71,102 @@ modules:
       - projet2projet2.zip
       name: projet2projet2
       target-path: resources/
+    - artifacts:
+      - orderecommerce.zip
+      name: orderecommerce
+      target-path: resources/
+    - artifacts:
+      - ordermanagementsystemecommercesystem.zip
+      name: ordermanagementsystemecommercesystem
+      target-path: resources/
+    - artifacts:
+      - nameproject1.zip
+      name: nameproject1
+      target-path: resources/
+    - artifacts:
+      - name1project1.zip
+      name: name1project1
+      target-path: resources/
+    - artifacts:
+      - rrrrproject1.zip
+      name: rrrrproject1
+      target-path: resources/
+    - artifacts:
+      - ttttttt.zip
+      name: ttttttt
+      target-path: resources/
+    - artifacts:
+      - fffproject2.zip
+      name: fffproject2
+      target-path: resources/
+    - artifacts:
+      - managementsystemecommercesystem.zip
+      name: managementsystemecommercesystem
+      target-path: resources/
+    - artifacts:
+      - testtest.zip
+      name: testtest
+      target-path: resources/
+    - artifacts:
+      - spaceproject1.zip
+      name: spaceproject1
+      target-path: resources/
+    - artifacts:
+      - project1.zip
+      name: project1
+      target-path: resources/
+    - artifacts:
+      - rvreverttrrrrr.zip
+      name: rvreverttrrrrr
+      target-path: resources/
+    - artifacts:
+      - rgetgethytffr.zip
+      name: rgetgethytffr
+      target-path: resources/
+    - artifacts:
+      - azerazer.zip
+      name: azerazer
+      target-path: resources/
+    - artifacts:
+      - eczfcdezd.zip
+      name: eczfcdezd
+      target-path: resources/
+    - artifacts:
+      - eddedetest.zip
+      name: eddedetest
+      target-path: resources/
+    - artifacts:
+      - eddedehtesth.zip
+      name: eddedehtesth
+      target-path: resources/
+    - artifacts:
+      - frfdzerf.zip
+      name: frfdzerf
+      target-path: resources/
+    - artifacts:
+      - ffffffff.zip
+      name: ffffffff
+      target-path: resources/
+    - artifacts:
+      - ffffyffffy.zip
+      name: ffffyffffy
+      target-path: resources/
+    - artifacts:
+      - yyyyyyyyyyyyy.zip
+      name: yyyyyyyyyyyyy
+      target-path: resources/
+    - artifacts:
+      - iiiiiiii.zip
+      name: iiiiiiii
+      target-path: resources/
+    - artifacts:
+      - iiiiiuuuuu.zip
+      name: iiiiiuuuuu
+      target-path: resources/
+    - artifacts:
+      - rtgtegbtree.zip
+      name: rtgtegbtree
+      target-path: resources/
 - name: vdgtboui
   type: html5
   path: app/oui
@@ -144,6 +240,246 @@ modules:
 - name: projet2projet2
   type: html5
   path: app/projet2
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: orderecommerce
+  type: html5
+  path: app/e-commerce
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: ordermanagementsystemecommercesystem
+  type: html5
+  path: app/ecommercesystem
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: nameproject1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: name1project1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: rrrrproject1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: ttttttt
+  type: html5
+  path: app/tttt
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: fffproject2
+  type: html5
+  path: app/project2
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: managementsystemecommercesystem
+  type: html5
+  path: app/e-commerce_system
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: testtest
+  type: html5
+  path: app/test
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: spaceproject1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: project1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: rvreverttrrrrr
+  type: html5
+  path: app/ttrrrrr
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: rgetgethytffr
+  type: html5
+  path: app/thytffr
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: azerazer
+  type: html5
+  path: app/azer
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: eczfcdezd
+  type: html5
+  path: app/dezd
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: eddedetest
+  type: html5
+  path: app/test
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: eddedehtesth
+  type: html5
+  path: app/testh
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: frfdzerf
+  type: html5
+  path: app/dzerf
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: ffffffff
+  type: html5
+  path: app/ffff
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: ffffyffffy
+  type: html5
+  path: app/ffffy
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: yyyyyyyyyyyyy
+  type: html5
+  path: app/yyyy
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: iiiiiiii
+  type: html5
+  path: app/iii
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: iiiiiuuuuu
+  type: html5
+  path: app/uuuuu
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: rtgtegbtree
+  type: html5
+  path: app/tree
   build-parameters:
     build-result: dist
     builder: custom

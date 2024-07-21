@@ -1,0 +1,18 @@
+{
+    "welcomeFile": "/cp.portal",
+    "authenticationMethod": "route",
+    "routes": [
+      {
+        "source": "^/cp.portal/(.*)$",
+        "target": "$1",
+        "localDir": "dist",
+        "cacheControl": "no-cache"
+      },
+      {
+        "source": "^/v4/(.*)$",
+        "target": "/v4/$1",
+        "authenticationType": "xsuaa"
+      }
+    ]
+  }
+  

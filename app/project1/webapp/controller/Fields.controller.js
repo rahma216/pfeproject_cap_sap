@@ -70,7 +70,7 @@ sap.ui.define(
               this.oRouter = this.getOwnerComponent().getRouter();
               this.oRouter.getRoute("Details").attachPatternMatched(this._onFieldsMatched, this);
             
-
+              this.getOwnerComponent().getEventBus().subscribe("servicechannelpress","press",this.onSupplierPress.bind(this),this);
 
           }
           ,
@@ -209,12 +209,7 @@ this.getView().bindElement({
      
             var oModel = this.getView().getModel("mainModel");
             var sUrl = oModel.sServiceUrl + "/Entity";
-            /*  var oViewModel = this.getView().getModel("viewModel");
-           
-             // Toggle the showTable property
-             var bShowTable = oViewModel.getProperty("/showTable");
-             oViewModel.setProperty("/showTable", !bShowTable);
-            */
+      
      
             var array = this.getView().byId("annotations").mProperties.selectedKeys;
             var annotations = array.join(" ");
@@ -281,14 +276,7 @@ this.getView().bindElement({
      
      
      
-                      /*
-                              var oFilter = new sap.ui.model.Filter({
-                                  path: "fld_ID", // Le chemin du champ à filtrer
-                                  operator: sap.ui.model.FilterOperator.EQ, // Opérateur de comparaison
-                                  value1: sID // La valeur de filtrage
-                              });
-                     
-                              oBinding2.filter(oFilter); */
+          
      
      
                     } else {
@@ -365,35 +353,7 @@ this.getView().bindElement({
                                   oModel0.setData({ entityData: entityDataa });
                                   oView0.setModel(oModel0);
 
-                                  // Fetch association data
-                                  /*  fetch(sUrl3)
-                                       .then(response => {
-                                           if (!response.ok) {
-                                               throw new Error('Network response was not ok');
-                                           }
-                                           return response.json();
-                                       })
-                                       .then(associations => {
-                                           console.log("Associations:", associations);
-             
-             
-                                           // Set the generated CDS entities to the view model or do other operations
-                                           const oView0 = this.getView();
-                                           const oModel0 = new sap.ui.model.json.JSONModel();
-                                           oModel0.setData({ entityData: entityDataa });
-                                           oView0.setModel(oModel0);
-                                           const fileName = 'entityData.json';
-                                           const filePath = './controller/' + fileName;
-                                           // Call generateCDSEntities here
-                                           const cdsEntities = this.generateCDSEntities(entityData.value, fields.value, associations.value);
-                                           console.log(cdsEntities);
-                                       })
-                                       .catch(error => {
-                                           console.error("Error retrieving associations:", error);
-                                       });  */
-
-                                  // Process entity and field data
-                                  // Set the entity data to the view model or do other operations
+                              
                               })
                               .catch(error => {
                                   console.error("Error retrieving fields:", error);
@@ -563,33 +523,6 @@ deleteAssociation: function () {
           let oBindList = oModel.bindList("/Association");
           let aFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, sID);
 
-          /////////////////////
-        /*   let oBindList2 = oModel2.bindList("/value");
-          console.log("mmmmmmmmmmmmmmm",oBindList2)
-  
-          oBindList2.filter(aFilter).requestContexts().then(function (aContexts) {
-            if (aContexts.length > 0) {
-                aContexts[0].delete().then(() => {
-                    // Vérifier si le composant propriétaire est disponible
-                    var oOwnerComponent = this.getOwnerComponent();
-                    if (oOwnerComponent) {
-                        // Publish the event after deletion
-                        oOwnerComponent.getEventBus().publish("servicechannel2", "onlistitempress2", { index: this.ID2 });
-                    } else {
-                        console.error("Owner component is not available.");
-                    }
-                }).catch((error) => {
-                    console.error("Error deleting item:", error);
-                });
-            } else {
-                console.log("No matching context found for ID:", sID);
-            }
-        }).catch((error) => {
-            console.error("Error requesting contexts:", error);
-        });
-         */
-
-          ////////////////////////
 
           oBindList.filter(aFilter).requestContexts().then(function (aContexts) {
             if (aContexts.length > 0) {
