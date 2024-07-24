@@ -51,7 +51,12 @@
     "watch-yyyy": "cds watch --open yyyy/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-iii": "cds watch --open iii/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-uuuuu": "cds watch --open uuuuu/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-tree": "cds watch --open tree/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-tree": "cds watch --open tree/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-reez": "cds watch --open reez/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-tttttttt": "cds watch --open tttttttt/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-management": "cds watch --open management/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-hhh": "cds watch --open hhh/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -119,6 +124,13 @@
     "app/uuuuu",
     "app/project1",
     "app/test",
-    "app/tree"
+    "app/tree",
+    "app/reez",
+    "app/projet",
+    "app/tttttttt",
+    "app/management",
+    "app/product",
+    "app/hhh",
+    "app/projet1"
   ]
 }

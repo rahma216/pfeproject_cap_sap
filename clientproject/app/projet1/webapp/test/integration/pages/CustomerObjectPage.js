@@ -8,7 +8,7 @@ sap.ui.define(['sap/fe/test/ObjectPage'], function(ObjectPage) {
 
     return new ObjectPage(
         {
-            appId: 'rtgtegb.tree',
+            appId: 'projet1.projet1',
             componentId: 'CustomerObjectPage',
             contextPath: '/Customer'
         },

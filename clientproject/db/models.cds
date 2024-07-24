@@ -1,52 +1,45 @@
- namespace models;
-              using { cuid, managed} from '@sap/cds/common';
+namespace models;
+using { cuid, managed} from '@sap/cds/common';
 entity Order {
 	key ID :UUID;
-	Status: String @mandatory;
-	OrderTotal: Decimal @readonly;
 	OrderNumber: String @readonly;
 	OrderDate: DateTime @readonly;
-	fld_Order: Association to Customer;
+	OrderTotal: Decimal @readonly;
+	Status: String @mandatory;
+	fld_OrderCustomer : Association to Customer;
 }
 entity Customer {
 	key ID :UUID;
-	CustomerEmail: String @readonly;
-	CustomerName: String @readonly;
 	CustomerPhone: String @mandatory;
 	CustomerAddress: String @readonly;
-	order : Association to many Order	on order.fld_Order = $self;
+	CustomerName: String @readonly;
+	CustomerEmail: String @readonly;
+	order : Association to many Order	on order.fld_OrderCustomer = $self;
 	client : Association to Client;
 }
 entity Product {
 	key ID :UUID;
 	Price: Decimal @readonly;
-	ProductID: String @readonly;
-	ProductName: String @readonly;
 	Category: String @mandatory;
+	ProductName: String @readonly;
+	ProductID: String @readonly;
 	Description: String @readonly;
-	clients : Composition of many ProductToClient on clients.product=$self;
-}
-entity ProductToClient {
-              
-	key product : Association to Product;
-              
-	key client : Association to Client;
-              
+	client : Association to many Client	on client.fld_ClientProduct = $self;
 }
 entity Client {
 	key ID :UUID;
-	ClientName: String @readonly;
-	ClientPhone: String @mandatory;
 	ClientEmail: String @readonly;
+	ClientPhone: String @mandatory;
+	ClientName: String @readonly;
 	ClientAddress: String @readonly;
-	products : Composition of many ProductToClient on products.client=$self;
+	fld_ClientProduct : Association to Product;
 	clientCustomer : Association to Customer;
 }
 entity Invoice {
 	key ID :UUID;
-	TotalAmount: Decimal @readonly;
-	InvoiceNumber: String @readonly;
 	InvoiceDate: DateTime @readonly;
+	InvoiceNumber: String @readonly;
+	TotalAmount: Decimal @readonly;
 }
 entity Payment {
 	key ID :UUID;
@@ -55,7 +48,7 @@ entity Payment {
 }
 entity Shipment {
 	key ID :UUID;
-	ShipmentDate: DateTime @readonly;
 	Status: String @readonly;
+	ShipmentDate: DateTime @readonly;
 }
 

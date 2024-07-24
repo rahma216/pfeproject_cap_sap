@@ -167,6 +167,26 @@ modules:
       - rtgtegbtree.zip
       name: rtgtegbtree
       target-path: resources/
+    - artifacts:
+      - zzdereez.zip
+      name: zzdereez
+      target-path: resources/
+    - artifacts:
+      - tttttttttttttttt.zip
+      name: tttttttttttttttt
+      target-path: resources/
+    - artifacts:
+      - managementmanagement.zip
+      name: managementmanagement
+      target-path: resources/
+    - artifacts:
+      - productproduct.zip
+      name: productproduct
+      target-path: resources/
+    - artifacts:
+      - hhhhhh.zip
+      name: hhhhhh
+      target-path: resources/
 - name: vdgtboui
   type: html5
   path: app/oui
@@ -480,6 +500,56 @@ modules:
 - name: rtgtegbtree
   type: html5
   path: app/tree
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: zzdereez
+  type: html5
+  path: app/reez
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: tttttttttttttttt
+  type: html5
+  path: app/tttttttt
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: managementmanagement
+  type: html5
+  path: app/management
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: productproduct
+  type: html5
+  path: app/product
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: hhhhhh
+  type: html5
+  path: app/hhh
   build-parameters:
     build-result: dist
     builder: custom

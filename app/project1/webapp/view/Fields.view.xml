@@ -309,13 +309,13 @@
                                                     <m:buttons>
                                                         <m:Button
                                                             id="confirmCreate2"
-                                                            text="Create"
+                                                            text="{i18n>create1}"
                                                             press=".onUpdate"
                                                             type="Accept"
                                                         />
                                                         <m:Button
                                                             id="cancelCreate2"
-                                                            text="Cancel"
+                                                            text="{i18n>cancel1}"
                                                             press="onCancelDialog"
                                                             type="Reject"
                                                         />
@@ -424,7 +424,7 @@
                                 </m:ComboBox>
                                 <m:Button
                                     id="association"
-                                    text="Association"
+                                    text="{i18n>button1}"
                                     press="onCreate"
                                     type="Emphasized"
                                     icon="sap-icon://collaborate"

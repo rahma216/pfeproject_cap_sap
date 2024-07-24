@@ -4,13 +4,13 @@ using modelsService as service from '../../srv/services';annotate service.Custom
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'CustomerEmail',
-                Value : CustomerEmail,
+                Label : 'CustomerPhone',
+                Value : CustomerPhone,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'CustomerPhone',
-                Value : CustomerPhone,
+                Label : 'CustomerName',
+                Value : CustomerName,
             },
         ],
     },
@@ -25,13 +25,13 @@ using modelsService as service from '../../srv/services';annotate service.Custom
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'CustomerEmail',
-            Value : CustomerEmail,
+            Label : 'CustomerPhone',
+            Value : CustomerPhone,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'CustomerPhone',
-            Value : CustomerPhone,
+            Label : 'CustomerName',
+            Value : CustomerName,
         },
     ],
 );

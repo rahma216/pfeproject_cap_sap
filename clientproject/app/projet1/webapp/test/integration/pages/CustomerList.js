@@ -8,7 +8,7 @@ sap.ui.define(['sap/fe/test/ListReport'], function(ListReport) {
 
     return new ListReport(
         {
-            appId: 'rtgtegb.tree',
+            appId: 'projet1.projet1',
             componentId: 'CustomerList',
             contextPath: '/Customer'
         },

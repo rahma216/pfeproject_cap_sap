@@ -148,7 +148,7 @@ sap.ui.define([
                             oBinding.create({
                                 "ID": newID,
                                 "name": this.byId("EntityNamee").getValue(),
-                                "annotations": " ",
+                                "annotations": "",
                             });
            
                             // Reset input fields after creation

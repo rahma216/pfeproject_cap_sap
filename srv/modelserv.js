@@ -183,15 +183,23 @@ module.exports = cds.service.impl(async (srv) => {
     });
 
     srv.on('appendCSVToFile', async (req) => {
-      const { content } = req.data; // Correctly capture the 'content' from the request data
-      const filePath = '/home/user/projects/pfe_rahma/clientproject/db/csv/models-Customer.csv'; // Ensure this path is correct
+     // const { content } = req.data; // Correctly capture the 'content' from the request data
+     // const filePath = '/home/user/projects/pfe_rahma/clientproject/db/csv/models-Customer.csv'; // Ensure this path is correct
     
+       // Read the value of "content" from the request body
+       const data = req.data.content;
+
+       //const filePath = '/home/user/projects/clientproject/app/project1/annotations.cds';
+       const filePath = req.data.path ;
+
+    
+      
       try {
         // Clear the file before appending
         await clearFile(filePath);
         
         // Append content to the file
-        await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
+        await fs.promises.writeFile(filePath, data + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
         console.log('Data written to file successfully.');
         return { success: true };
       } catch (error) {

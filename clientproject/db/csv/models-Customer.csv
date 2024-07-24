@@ -1,2 +1,22 @@
 CustomerName,CustomerAddress,CustomerPhone,CustomerEmail
-name,adress,phone,email
+Jean Dupont,123 Rue de Paris,123456789,jean.dupont@email.com
+Marie Curie,456 Avenue des Champs,987654321,marie.curie@email.com
+Pierre Martin,789 Boulevard Saint-Germain,147852369,pierre.martin@email.com
+Sophie Leclerc,321 Route de Lyon,162547896,sophie.leclerc@email.com
+Alain Dubois,654 Boulevard de la Liberté,178965432,alain.dubois@email.com
+Claire Robert,987 Rue des Fleurs,187452369,claire.robert@email.com
+Lucas Bernard,159 Avenue des Étoiles,196547823,lucas.bernard@email.com
+Isabelle Martin,753 Route de Provence,204789653,isabelle.martin@email.com
+Thierry Blanc,852 Boulevard des Arbres,213569874,thierry.blanc@email.com
+Nathalie Petit,468 Rue de la République,224789513,nathalie.petit@email.com
+Victor Hugo,321 Rue de la Gare,234567890,victor.hugo@email.com
+Emilie Laurent,654 Rue de la Montagne,245678901,emilie.laurent@email.com
+François Dupuis,987 Boulevard de l'Atlantique,256789012,francois.dupuis@email.com
+Laura Martin,852 Avenue du Parc,267890123,laura.martin@email.com
+Gabriel Lefebvre,468 Rue des Lilas,278901234,gabriel.lefebvre@email.com
+Julie Moreau,753 Boulevard des Capucines,289012345,julie.moreau@email.com
+Antoine Gerard,159 Avenue de la Liberté,290123456,antoine.gerard@email.com
+Céline Dufresne,321 Rue des Granges,301234567,celine.dufresne@email.com
+Olivier Rousseau,654 Avenue des Tilleuls,312345678,olivier.rousseau@email.com
+Léa Simon,987 Route du Soleil,323456789,lea.simon@email.com
+Thomas Richard,852 Boulevard des Roses,334567890,thomas.richard@email.com

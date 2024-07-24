@@ -17,7 +17,7 @@ action downloadZip() returns String;
   action appendTextToFile(content : String)              returns {
     success : Boolean
   };
-    action appendCSVToFile(content : String)              returns {
+    action appendCSVToFile(content : String, path : String)              returns {
     success : Boolean
   };
 

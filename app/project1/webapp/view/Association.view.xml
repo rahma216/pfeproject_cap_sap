@@ -250,22 +250,22 @@
                             title="Template Information"
                         >
                             <form:content>
-                                <Label text="Project Name" />
+                                <Label text="{i18n>listreportlabel1}"/>
                                 <Input
                                     required="true"
                                     change="onChange"
                                      id="projectname"
                                 />
-                                <Label text="Application Title" />
+                                <Label text="{i18n>listreportlabel2}"/>
                                 <Input value="" id="apptitle" required="true"/>
  
-                                <Label text="Template Namespace"  />
+                                <Label text="{i18n>listreportlabel3}" />
  
                                 <Input value="" id="namespace" required="true" />
  
-                                <Label text="Application Description" />
+                                <Label text="{i18n>listreportlabel4}" />
                                 <Input value="" id="appdesc" required="true" />
-                                <Label text="Main Entity" />
+                                <Label text="{i18n>listreportlabel5}" />
                                <Select id="choice1" items="{rahmaModel>/Entity}" change=".onSelectChange" required="true" selectedItem="{rahmaModel>name}">
     <core:Item key="{rahmaModel>name}" text="{rahmaModel>name}" />
 </Select>

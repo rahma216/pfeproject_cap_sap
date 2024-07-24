@@ -1,4 +1,4 @@
 createdAt,createdBy,modifiedAt,modifiedBy,entitySource_ID,entityTarget_ID,type
 2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,1,2,ManyToOne
-2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,3,4,ManyToMany
+2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,4,3,ManyToOne
 2024-03-19T09:41:37.688Z,anonymous,2024-03-19T09:41:37.688Z,anonymous,4,2,OneToOne

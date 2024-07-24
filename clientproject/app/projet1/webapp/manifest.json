@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "rtgtegb.tree",
+    "id": "projet1.projet1",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.14.1",
-      "toolsId": "aace25cc-d7e9-4e3e-90f0-6f8adbc1e69e"
+      "toolsId": "a16008d2-cef5-4880-9a08-2900ae46a083"
     },
     "dataSources": {
       "mainService": {
@@ -45,7 +45,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.126.0",
+      "minUI5Version": "1.126.1",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -61,7 +61,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "rtgtegb.tree.i18n.i18n"
+          "bundleName": "projet1.projet1.i18n.i18n"
         }
       },
       "": {

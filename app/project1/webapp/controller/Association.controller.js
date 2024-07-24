@@ -114,7 +114,8 @@ sap.ui.define([
      
               // Convert sheet to CSV format
               var csv = XLSX.utils.sheet_to_csv(sheet);
-              that.onAppendCSVToFilePress(csv);
+              console.log("tttttttttttttteeeeeeeeeeesssssssssssttttttttt",this.test)
+              that.onAppendCSVToFilePress(csv,this.test);
               // Log or process the CSV data
               console.log("CSV Content:", csv);
           }.bind(that);
@@ -673,15 +674,16 @@ sap.ui.define([
 
     }
     ,
-    onAppendCSVToFilePress: function (data) {
+    onAppendCSVToFilePress: function (data,test) {
 
-
+      var path="/home/user/projects/pfe_rahma/clientproject/db/csv"
+      var fullpath=path+"/models-"+test+".csv"
       fetch("/odata/v4/models/appendCSVToFile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: data }) // Pass the variable in the request body
+        body: JSON.stringify({ content: data,path:fullpath })// Pass the variable in the request body
       })
         .then(response => response.json())
         .then(data1 => {

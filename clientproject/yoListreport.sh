@@ -7,33 +7,33 @@ cd "$(dirname "$0")"
   echo 4             # Select "Data source: Use a Local CAP Project"
   sleep 2
   echo 1             # Choose your CAP project
-  sleep 2
+  sleep 3
   echo 1             # Select "Main entity: Entity"
-  sleep 2
+  sleep 3
   echo       # Enter the main entity name
   # Skip selecting Navigation entity
   sleep 2
   echo          # Skip selecting fields
-  sleep 2
+  sleep 3
   echo 3
-  sleep 2
+  sleep 3
   echo "$1"    # Enter the project name
-  sleep 2
+  sleep 3
   echo "$2"   # Enter the app title
-  sleep 2
+  sleep 3
   echo "$3"          # Enter the namespace
-  sleep
+  sleep 3
   echo "$4"  # Enter the description
-  sleep 4
+  sleep 3
   echo   # Select the SAPUI5 version
-  sleep 2
+  sleep 3
   echo y             # Confirm adding i18n support
-  sleep 2
+  sleep 3
   echo N             # Skip adding example code
-  sleep 2
+  sleep 3
   echo N             # Confirm adding git support
-  sleep 2
+  sleep 3
   echo               # Simulate pressing Enter
-  sleep 2
+  sleep 3
   echo               # Simulate pressing Enter
 } | yo @sap/fiori --skip-install --skip-cache --no-interaction --force || true

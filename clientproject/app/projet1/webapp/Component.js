@@ -3,7 +3,7 @@ sap.ui.define(
     function (Component) {
         "use strict";
 
-        return Component.extend("rtgtegb.tree.Component", {
+        return Component.extend("projet1.projet1.Component", {
             metadata: {
                 manifest: "json"
             }
