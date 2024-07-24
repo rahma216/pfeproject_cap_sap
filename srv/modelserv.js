@@ -21,12 +21,12 @@ module.exports = cds.service.impl(async (srv) => {
 
   app.get('/download', (req, res) => {
       console.log('Download route accessed');
-      const outputFolder = path.join(__dirname, '../clientproject'); // Adjust this path
-      const outputPath = path.join(__dirname, 'output.zip'); // Output file path
+      const outputFolder = path.join(__dirname, '../clientproject'); 
+      const outputPath = path.join(__dirname, 'output.zip'); 
 
       const output = fs.createWriteStream(outputPath);
       const archive = archiver('zip', {
-          zlib: { level: 9 } // Set the compression level
+          zlib: { level: 9 } 
       });
 
       output.on('close', function() {
@@ -165,15 +165,15 @@ module.exports = cds.service.impl(async (srv) => {
     
     // Service to append text to file
     srv.on('appendTextToFile', async (req) => {
-      const { content } = req.data; // Correctly capture the 'content' from the request data
-      const filePath = '/home/user/projects/pfe_rahma/clientproject/db/models.cds'; // Ensure this path is correct
+      const { content } = req.data; 
+      const filePath = '/home/user/projects/pfe_rahma/clientproject/db/models.cds';
     
       try {
         // Clear the file before appending
         await clearFile(filePath);
         
         // Append content to the file
-        await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
+        await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' }); 
         console.log('Data written to file successfully.');
         return { success: true };
       } catch (error) {
@@ -183,22 +183,18 @@ module.exports = cds.service.impl(async (srv) => {
     });
 
     srv.on('appendCSVToFile', async (req) => {
-     // const { content } = req.data; // Correctly capture the 'content' from the request data
-     // const filePath = '/home/user/projects/pfe_rahma/clientproject/db/csv/models-Customer.csv'; // Ensure this path is correct
-    
-       // Read the value of "content" from the request body
+  
        const data = req.data.content;
 
-       //const filePath = '/home/user/projects/clientproject/app/project1/annotations.cds';
        const filePath = req.data.path ;
 
     
       
       try {
-        // Clear the file before appending
+      
         await clearFile(filePath);
         
-        // Append content to the file
+    
         await fs.promises.writeFile(filePath, data + '\n', { flag: 'a' }); // Use 'a' flag to append to the file
         console.log('Data written to file successfully.');
         return { success: true };
@@ -208,16 +204,16 @@ module.exports = cds.service.impl(async (srv) => {
       }
     });
     
-     // Service to append text to services.cds file
+   
 srv.on('appendServiceToFile', async (req) => {
   const { content } = req.data;
   const filePath = '/home/user/projects/pfe_rahma/clientproject/srv/services.cds';
 
   try {
-    // Clear the file before appending
+   
     await clearFile(filePath);
 
-    // Append content to the file
+ 
     await fs.promises.writeFile(filePath, content + '\n', { flag: 'a' });
     console.log('Data written to file successfully.');
     return { success: true };
@@ -226,7 +222,7 @@ srv.on('appendServiceToFile', async (req) => {
     return { success: false, error: error.message };
   }
 });
-      // Handle the ExecuteCommand event
+   
       srv.on('ExecuteCommand', async (req) => {
         const { command } = req.data;
     
@@ -240,7 +236,7 @@ srv.on('appendServiceToFile', async (req) => {
         }
       });
     
-      // Function to execute terminal commands
+  
       async function executeTerminalCommand(command) {
         return new Promise((resolve, reject) => {
           const process = spawn(command, {
